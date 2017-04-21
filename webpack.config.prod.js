@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     devtool: 'source-map',
     entry: [
-        './_src/index'
+        './app/index'
     ],
     output: {
         path: path.join(__dirname, 'dist'),
@@ -26,12 +26,10 @@ module.exports = {
     module: {
         loaders: [{
             test: /\.js$/,
-            loaders: ['babel'],
-            include: path.join(__dirname, '_src')
+            loaders: ['babel']
         },{
             test: /\.css$/,
             exclude: /node_modules/,
-            include: path.join(__dirname, '_src'),
             loader: 'style-loader!css-loader'
         }]
     }
