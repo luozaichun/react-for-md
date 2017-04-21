@@ -8,7 +8,7 @@ module.exports = {
     ],
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'react-markdown.js'
+        filename: 'react-markdown.min.js'
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),

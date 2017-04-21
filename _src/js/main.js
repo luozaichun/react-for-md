@@ -1,5 +1,5 @@
 import React from 'react';
-// import style from '../css/style.css';
+import style from '../css/style.css';
 var main = React.createClass({
     getInitialState: function () {
         return {
