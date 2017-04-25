@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "build": "webpack --config webpack.config.prod.js --progress --colors --hot --inline -d -p",
+    "build": "webpack --config webpack.config.prod.js --progress --colors -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "autoprefixer-loader": "^2.0.0",
     "babel-core": "^6.9.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-react-transform": "^2.0.2",
@@ -25,16 +26,18 @@
     "css-loader": "^0.23.1",
     "eslint": "^3.1.0",
     "eslint-plugin-react": "^5.2.2",
+    "extract-text-webpack-plugin": "^0.8.2",
+    "file-loader": "^0.9.0",
     "jquery": "^3.1.0",
+    "react": "latest",
+    "react-dom": "latest",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.2.10",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1",
-    "react": "latest",
-    "react-dom": "latest"
+    "webpack": "^1.15.0",
+    "webpack-dev-server": "^1.14.1"
   },
   "author": "luozaichun",
   "license": "ISC"

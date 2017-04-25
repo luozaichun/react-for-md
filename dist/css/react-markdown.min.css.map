@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///webpack:///_src/css/style.css"],"names":[],"mappings":"AAAA,GACI,UACA,eACA,gBACA,2BAAiC","file":"css/react-markdown.min.css","sourcesContent":[".h{\r\n    color:#f00;\r\n    font-size: 22px;\r\n    font-weight: bold;\r\n    text-shadow: 5px 5px 5px #FF0000;\r\n}\n\n\n// WEBPACK FOOTER //\n// webpack:///_src/css/style.css"],"sourceRoot":""}

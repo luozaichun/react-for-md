@@ -1,12 +1,13 @@
 import React from 'react';
 import style from '../css/style.css';
+
 var main = React.createClass({
     getInitialState: function () {
         return {
             opacity: 1.0
         };
     },
-
+    
     componentDidMount: function () {
         this.timer = setInterval(function () {
             var opacity = this.state.opacity;
@@ -23,7 +24,7 @@ var main = React.createClass({
     render: function () {
         return (
             <div className="h">
-                Hello world
+                Hello XXX
             </div>
         );
     }

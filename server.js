@@ -13,5 +13,5 @@ server.listen(3000, 'localhost', function (err, result) {
         return console.log(err);
     }
 
-    console.log('Listening at http://localhost:3000/');
+    console.log('Listening at http://localhost:3000');
 });

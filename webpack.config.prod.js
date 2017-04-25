@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     devtool: 'source-map',
     entry: [
@@ -8,7 +8,8 @@ module.exports = {
     ],
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'react-markdown.min.js'
+        filename: 'js/react-markdown.min.js',
+        publicPath: '/dist/'
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
@@ -21,7 +22,8 @@ module.exports = {
             compressor: {
                 warnings: false
             }
-        })
+        }),
+        new ExtractTextPlugin('css/react-markdown.min.css')
     ],
     module: {
         loaders: [{
@@ -29,8 +31,7 @@ module.exports = {
             loaders: ['babel']
         },{
             test: /\.css$/,
-            exclude: /node_modules/,
-            loader: 'style-loader!css-loader'
+            loader: ExtractTextPlugin.extract('style', 'css-loader?sourceMap!autoprefixer-loader?browsers=last 2 versions')
         }]
     }
 };

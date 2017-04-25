@@ -10,7 +10,8 @@ module.exports = {
     ],
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'react-markdown.min.js'
+        filename: 'react-markdown.js',
+        publicPath: 'http://localhost:3000/dist'
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin()
