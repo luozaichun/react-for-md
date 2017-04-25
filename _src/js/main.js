@@ -1,13 +1,19 @@
 import React from 'react';
 import style from '../css/style.css';
+import marked from 'marked';
 
-var main = React.createClass({
-    getInitialState: function () {
-        return {
-            opacity: 1.0
-        };
+const Eidtor = React.createClass({
+    propTypes: {
+        content: React.PropTypes.string.isRequired
     },
-    
+    getInitialState () {
+        return {
+            panelClass: 'md-panel',
+            mode: 'split',
+            isFullScreen: false,
+            result: marked(this.props.content || '')
+        }
+    },
     componentDidMount: function () {
         this.timer = setInterval(function () {
             var opacity = this.state.opacity;
@@ -29,4 +35,4 @@ var main = React.createClass({
         );
     }
 });
-export default main;
+export default Eidtor;
