@@ -97,6 +97,42 @@ body {
     padding: 0.7em;
     height: 500px;
 }
+/*toolbar*/
+.edit-toolbar{
+    width: 100%;
+    background-color: #444;
+    padding: 10px;
+}
+.edit-toolbar li{
+    float: left;
+    margin-left: 15px;
+    line-height: 21px;
+}
+.edit-toolbar li:nth-child(3),.edit-toolbar li:nth-child(7){
+    margin-left: 30px;
+}
+.edit-toolbar li i{
+    color: #bbbbb0;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.edit-toolbar li a{
+    display: block;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+.edit-toolbar li a:hover i{
+    color: #ffffff;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
 /*markdown*/
 @font-face {
     font-family: octicons-link;
@@ -533,9 +569,11 @@ body {
 }
 
 .markdown-body blockquote {
-    padding: 0 1em;
-    color: #6a737d;
-    border-left: 0.25em solid #dfe2e5;
+    padding: 10px 15px;
+    border-left-style: solid;
+    border-left-width: 10px;
+    border-color: #D6DBDF;
+    background: none repeat scroll 0 0 rgba(102,128,153,.05);
 }
 
 .markdown-body blockquote>:first-child {
