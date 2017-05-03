@@ -1,11 +1,28 @@
 import React from 'react';
 import marked from 'marked';
-import style from '../css/style.css';
+import highlight from "highlight.js";
 import classNames from 'classnames';
+import style from '../css/style.css';
+import '../css/editor.css';
+
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    highlight: function (code) {
+        return highlight.highlightAuto(code).value;
+    }
+});
+
 class Eidtor extends React.Component {
-    // static propTypes = {
-    //     // content: React.PropTypes.string.isRequired
-    // };
+    static propTypes = {
+        content: React.PropTypes.string.isRequired
+    };
     constructor(props){
         super(props);
         this.state = {
@@ -13,14 +30,13 @@ class Eidtor extends React.Component {
             mode: 'split',
             isFullScreen: false,
             theme:'light',
-            value: marked('')
+            content: marked('')
         }
     }
     render() {
         const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'fullscreen': this.state.isFullScreen },{ 'dark': this.state.mode === 'dark'} ]);
         const editorClass = classNames([ 'mod-editor', { 'main-mode': this.state.mode === 'edit' } ]);
-        const previewClass = classNames([ 'mod-preview', { 'hidden': this.state.mode === 'edit','main-mode': this.state.mode === 'preview'} ]);
-        let value = this.state.value;
+        const previewClass = classNames([ 'mod-preview','markdown-body',{ 'hidden': this.state.mode === 'edit','main-mode': this.state.mode === 'preview'} ]);
         return (
             <div className={panelClass}>
                 <div className="mod-tool">
@@ -32,19 +48,15 @@ class Eidtor extends React.Component {
                     </ul>
                 </div>
                 <div className={editorClass}>
-                    <textarea name="content" value={value} onChange={this.handleChange.bind(this)}></textarea>
+                    <textarea name="content" ref="editor" onChange={this.handleChange.bind(this)}></textarea>
                 </div>
-                <div className={previewClass} dangerouslySetInnerHTML={{ __html: this.state.value }}></div>
+                <div className={previewClass} dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
             </div>
         );
     }
-    handleChange (event) {
-        this.setState({
-            value: event.target.value
-        });
-        // setTimeout(() => {
-        //     this.setState({ content: marked(e.target.value) });
-        // }, 300)
+    handleChange () {
+        this.setState({ content: marked(this.refs.editor.value) });
     }
+
 }
 export default Eidtor;
