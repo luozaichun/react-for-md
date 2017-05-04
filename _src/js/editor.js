@@ -27,13 +27,13 @@ class Eidtor extends React.Component {
             panelClass: 'mod-panel',
             mode: 'split',
             isFullScreen: false,
-            theme:'light',
-            content: marked(this.props.content || '')
+            theme:'light'
+
         }
     }
     render() {
-        const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'fullscreen': this.state.isFullScreen },{ 'dark': this.state.mode === 'dark'} ]);
-        const editorClass = classNames([ 'mod-editor', { 'main-mode': this.state.mode === 'edit' } ]);
+        const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'fullscreen': this.state.isFullScreen },{ 'dark': this.state.theme === 'dark'} ]);
+        const editorClass = classNames([ 'mod-editor', { 'main-mode': this.state.mode === 'edit','hidden': this.state.mode === 'preview'} ]);
         const previewClass = classNames([ 'mod-preview',{ 'hidden': this.state.mode === 'edit','main-mode': this.state.mode === 'preview'} ]);
         return (
             <div className={panelClass}>
@@ -44,7 +44,7 @@ class Eidtor extends React.Component {
                 <div className="m-content">
                     <div className={editorClass}>
                         <div className="m-editor">
-                            <textarea name="content" ref="editor" onChange={()=>this.handleChange()}></textarea>
+                            <textarea name="content" ref="editor" onChange={this.handleChange.bind(this)}></textarea>
                         </div>
                     </div>
                     <div className={previewClass}>
@@ -75,36 +75,40 @@ class Eidtor extends React.Component {
        )
     }
     modebat(){
+        const actCheck=(_mode)=>classNames({'act': this.state.mode=== _mode});
         return(
             <ul className="preview-toolbar clearfix">
                 <li>
-                    <a title="全屏模式" >
+                    <a className={actCheck("isFullScreen")} title="全屏模式" >
                         <i className="fa fa-arrows-alt"></i>
                     </a>
                 </li>
                 <li>
-                    <a title="主体切换">
+                    <a className={actCheck("dark")} title="主体切换">
                         <i className="fa fa-adjust"></i>
                     </a>
                 </li>
                 <li>
-                    <a title="阅读模式">
+                    <a className={actCheck("preview")} onClick={(preview)=>this.chageMode("preview")} title="阅读模式">
                         <i className="fa fa-eye"></i>
                     </a>
                 </li>
                 
                 <li>
-                    <a title="分屏模式">
+                    <a className={actCheck("split")} onClick={(split)=>this.chageMode("split")} title="分屏模式">
                         <i className="fa fa-columns"></i>
                     </a>
                 </li>
                 <li>
-                    <a title="编辑模式">
+                    <a className={actCheck("edit")} onClick={(edit)=>this.chageMode("edit")} title="编辑模式">
                         <i className="fa fa-pencil"></i>
                     </a>
                 </li>
             </ul>  
         ) 
+    }
+    chageMode(_mode){
+        this.setState({mode: _mode});
     }
     
 }

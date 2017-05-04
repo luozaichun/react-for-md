@@ -72,7 +72,6 @@ body {
 .mod-panel .m-content{
     overflow: hidden;
     height: 100%;
-    position: relative;
 }
 .mod-editor,.mod-preview{
     float: left;
@@ -81,16 +80,44 @@ body {
     width: 50%;
     height: 100%;
     background-color: #f1f1f1;
+    -webkit-transition: width 0.2s linear;
+    -moz-transition: width 0.2s linear;
+    -ms-transition: width 0.2s linear;
+    -o-transition: width 0.2s linear;
+    transition: width 0.2s linear;
+    position: relative;
+}
+.mod-preview{
+    background-color: #fafafa;
+}
+.mod-editor.main-mode,.mod-preview.main-mode{
+    width: 100%;
+    -webkit-transition: width 0.3s linear;
+    -moz-transition: width 0.3s linear;
+    -ms-transition: width 0.3s linear;
+    -o-transition: width 0.3s linear;
+    transition: width 0.3s linear;
+}
+.mod-preview.hidden,.mod-editor.hidden{
+    width: 0;
+    -webkit-transition: width 0.3s linear;
+    -moz-transition: width 0.3s linear;
+    -ms-transition: width 0.3s linear;
+    -o-transition: width 0.3s linear;
+    transition: width 0.3s linear;
 }
 .mod-editor .m-editor,.mod-preview .m-preview{
     font:13.34px helvetica,arial,freesans,clean,sans-serif;
     color:black;
     line-height:1.4em;
-    background-color: #f1f1f1;
     width: 100%;
     overflow:hidden;
-    height: 89%;
-    padding: 3% 0;
+    height: 90%;
+    padding: 2% 0;
+}
+.mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-editor{
+    height: 90%;
+    padding: 1% 0;
 }
 .mod-editor textarea{
     overflow-y: auto;
@@ -103,16 +130,16 @@ body {
     padding: 0 3%;
     max-width: 94%;
     width: 94%;
+    line-height: 1.5;
 }
-.mod-panel .m-content:after{
+.mod-editor:after{
     content: '';
     height: 100%;
     background-color: #e0e2e1;
     position: absolute;
     width: 4px;
-    left: 50%;
+    right: -1px;
     top: 0;
-    margin-left: -2px;
 }
 
 /*toolbar*/
@@ -163,6 +190,9 @@ body {
     -ms-transition: all 0.2s linear;
     -o-transition: all 0.2s linear;
     transition: all 0.2s linear;
+}
+.edit-toolbar li a.act i,.preview-toolbar li a.act i{
+    color: #5eb95e;
 }
 /*markdown*/
 @font-face {
