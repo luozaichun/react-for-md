@@ -137,7 +137,7 @@ body {
     height: 100%;
     background-color: #e0e2e1;
     position: absolute;
-    width: 4px;
+    width: 2px;
     right: -1px;
     top: 0;
 }
@@ -146,6 +146,7 @@ body {
 .mod-tool{
     background-color: #444;
     padding: 15px 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.2);
 }
 .edit-toolbar,.preview-toolbar{
     float: left;
@@ -193,6 +194,18 @@ body {
 }
 .edit-toolbar li a.act i,.preview-toolbar li a.act i{
     color: #5eb95e;
+}
+.mod-panel.dark .mod-tool{
+    background-color: #000000;
+}
+.mod-panel.dark .mod-preview{
+    background-color: #444;
+}
+.mod-panel.dark .mod-editor,.mod-panel.dark .m-editor textarea{
+    background-color: #3c3c3c;
+}
+.mod-panel.dark .mod-editor .m-editor ,.mod-panel.dark .mod-editor .m-editor textarea,.mod-panel.dark .mod-preview .m-preview{
+    color: #D6DBDF;
 }
 /*markdown*/
 @font-face {

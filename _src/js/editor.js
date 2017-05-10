@@ -27,19 +27,19 @@ class Eidtor extends React.Component {
             panelClass: 'mod-panel',
             mode: 'split',
             isFullScreen: false,
-            theme:'light'
+            theme:false
 
         }
     }
     render() {
-        const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'fullscreen': this.state.isFullScreen },{ 'dark': this.state.theme === 'dark'} ]);
+        const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'fullscreen': this.state.isFullScreen },{ 'dark': this.state.theme} ]);
         const editorClass = classNames([ 'mod-editor', { 'main-mode': this.state.mode === 'edit','hidden': this.state.mode === 'preview'} ]);
         const previewClass = classNames([ 'mod-preview',{ 'hidden': this.state.mode === 'edit','main-mode': this.state.mode === 'preview'} ]);
         return (
             <div className={panelClass}>
                 <div className="mod-tool clearfix">
                     {this.toolbar()}
-                    {this.modebat()}
+                    {this.modebar()}
                 </div>
                 <div className="m-content">
                     <div className={editorClass}>
@@ -58,7 +58,7 @@ class Eidtor extends React.Component {
     }
     handleChange () {
         this.setState({ content: marked(this.refs.editor.value) });
-    }
+    }    
     toolbar(){
        return(
            <ul className="edit-toolbar clearfix">
@@ -74,17 +74,19 @@ class Eidtor extends React.Component {
            </ul>
        )
     }
-    modebat(){
+    modebar(){
         const actCheck=(_mode)=>classNames({'act': this.state.mode=== _mode});
+        const actTheme=()=>classNames({'act': this.state.theme});
+        const actFullScreen=()=>classNames({'act': this.state.isFullScreen});
         return(
             <ul className="preview-toolbar clearfix">
                 <li>
-                    <a className={actCheck("isFullScreen")} title="全屏模式" >
+                    <a className={actFullScreen} title="全屏模式" >
                         <i className="fa fa-arrows-alt"></i>
                     </a>
                 </li>
                 <li>
-                    <a className={actCheck("dark")} title="主体切换">
+                    <a className={actTheme} onClick={this.setState({theme: !this.state.theme})} title="主体切换">
                         <i className="fa fa-adjust"></i>
                     </a>
                 </li>
