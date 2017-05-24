@@ -31,6 +31,10 @@ class Eidtor extends React.Component {
 
         }
     }
+    componentDidMount() {
+
+        window.addEventListener('onKeyDown ', this.tooggleFullScreen)
+    }
     render() {
         const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'fullscreen': this.state.isFullScreen },{ 'dark': this.state.theme} ]);
         const editorClass = classNames([ 'mod-editor', { 'main-mode': this.state.mode === 'edit','hidden': this.state.mode === 'preview'} ]);
@@ -81,12 +85,12 @@ class Eidtor extends React.Component {
         return(
             <ul className="preview-toolbar clearfix">
                 <li>
-                    <a className={actFullScreen} title="全屏模式" >
+                    <a ref="fullScreen" className={actFullScreen()} onClick={()=>this.tooggleFullScreen()}  onKeyDown={this.tooggleFullScreen.bind(this)} title="全屏模式" >
                         <i className="fa fa-arrows-alt"></i>
                     </a>
                 </li>
                 <li>
-                    <a className={actTheme} onClick={this.setState({theme: !this.state.theme})} title="主体切换">
+                    <a className={actTheme()} onClick={(_state)=>this.chageState({theme: !this.state.theme})} title="主体切换">
                         <i className="fa fa-adjust"></i>
                     </a>
                 </li>
@@ -112,6 +116,45 @@ class Eidtor extends React.Component {
     chageMode(_mode){
         this.setState({mode: _mode});
     }
-    
+    chageState(_state){
+        this.setState(_state);
+    }
+    tooggleFullScreen(){
+        if(this.state.isFullScreen===true){
+            this.setState({isFullScreen: false});
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+            else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+            else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            }
+            else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+        }
+        else{
+            this.setState({isFullScreen: true});
+            let docElm = document.documentElement;
+            /*W3C*/
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            }
+            /*FireFox*/
+            else if (docElm.mozRequestFullScreen) {
+                docElm.mozRequestFullScreen();
+            }
+            /*Chrome*/
+            else if (docElm.webkitRequestFullScreen) {
+                docElm.webkitRequestFullScreen();
+            }
+            /*IE11*/
+            else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        }
+    }
 }
 export default Eidtor;

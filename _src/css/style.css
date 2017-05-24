@@ -204,7 +204,7 @@ body {
 .mod-panel.dark .mod-editor,.mod-panel.dark .m-editor textarea{
     background-color: #3c3c3c;
 }
-.mod-panel.dark .mod-editor .m-editor ,.mod-panel.dark .mod-editor .m-editor textarea,.mod-panel.dark .mod-preview .m-preview{
+.mod-panel.dark .mod-editor .m-editor ,.mod-panel.dark .mod-editor .m-editor textarea,.mod-panel.dark .mod-preview .m-preview .markdown-body{
     color: #D6DBDF;
 }
 /*markdown*/
