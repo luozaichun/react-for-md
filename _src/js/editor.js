@@ -28,7 +28,6 @@ class Eidtor extends React.Component {
             mode: 'split',
             isFullScreen: false,
             theme:false
-
         }
     }
     componentDidMount() {
@@ -66,15 +65,15 @@ class Eidtor extends React.Component {
     toolbar(){
        return(
            <ul className="edit-toolbar clearfix">
-             <li><a title="加粗"><i className="fa fa-bold"></i></a></li>
-             <li><a title="斜体"><i className="fa fa-italic"></i></a></li>
-             <li><a title="链接"><i className="fa fa-link"></i></a></li>
-             <li><a title="引用"><i className="fa fa-quote-left"></i></a></li>
-             <li><a title="代码段"><i className="fa fa-code"></i></a></li>
-             <li><a title="图片"><i className="fa fa-picture-o"></i></a></li>
-             <li><a title="有序列表"><i className="fa fa-list-ol"></i></a></li>
-             <li><a title="无序列表"><i className="fa fa-list-ul"></i></a></li>
-             <li><a title="标题" ><i className="fa fa-header"></i></a></li>
+             <li><a title="加粗" onClick={()=>this.boldText()}><i className="fa fa-bold"></i></a></li>
+             <li><a title="斜体" onClick={()=>this.italicText()}><i className="fa fa-italic"></i></a></li>
+             <li><a title="链接" onClick={()=>this.linkText()}><i className="fa fa-link"></i></a></li>
+             <li><a title="引用" onClick={()=>this.quoteText()}><i className="fa fa-quote-left"></i></a></li>
+             <li><a title="代码段" onClick={()=>this.codeText()}><i className="fa fa-code"></i></a></li>
+             <li><a title="图片" onClick={()=>this.pictureText()}><i className="fa fa-picture-o"></i></a></li>
+             <li><a title="有序列表" onClick={()=>this.list_olText()}><i className="fa fa-list-ol"></i></a></li>
+             <li><a title="无序列表" onClick={()=>this.list_ulText()}><i className="fa fa-list-ul"></i></a></li>
+             <li><a title="标题" onClick={()=>this.headerText()}><i className="fa fa-header"></i></a></li>
            </ul>
        )
     }
@@ -156,5 +155,74 @@ class Eidtor extends React.Component {
             }
         }
     }
+    getTxt1CursorPosition(object){
+        const textarea=object;
+        let cursurPosition=0;
+        if(textarea.selectionStart){/*非IE*/
+            cursurPosition= textarea.selectionStart;
+        }else{/*IE*/
+            try{
+                var range = document.selection.createRange();
+                range.moveStart("character",-textarea.value.length);
+                cursurPosition=range.text.length;
+            }catch(e){
+                cursurPosition = 0;
+            }
+        }
+        return cursurPosition;/*返回当前索引*/
+    }
+    shortCutText(string,start,end){
+        const obj=this.refs.editor;
+        let origin=obj.value;
+        let preStart=this.getTxt1CursorPosition(obj);
+        alert(preStart)
+
+
+        
+
+        obj.value=origin+string;
+        this.setState({ content: marked(this.refs.editor.value) });
+
+
+
+        /*选中*/
+        if(string.createTextRange){/*IE浏览器*/
+            let range = obj.createTextRange();
+            range.moveEnd(string,preStart+end);
+            range.moveStart(string, preStart+start);
+            range.select();
+        }else{/*非IE浏览器*/
+            obj.setSelectionRange(preStart+start, preStart+end);
+            obj.focus();
+        }
+    }
+    boldText(){
+        this.shortCutText("**加粗文字**", 2, 6)
+    }
+    italicText(){
+        this.shortCutText("_斜体文字_", 1, 5)
+    }
+    linkText(){
+        this.shortCutText("[链接文本](www.link.com)", 1, 5)
+    }
+    quoteText(){
+        this.shortCutText("> 引用", 2, 4)
+    }
+    codeText(){
+        this.shortCutText("```\ncode block\n```", 4, 14)
+    }
+    pictureText () {
+        this.shortCutText("![alt](www.link.com)", 2, 5)
+    }
+    list_olText () {
+        this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
+    }
+    list_ulText () {
+        this.shortCutText("- 无序列表项0\n- 无序列表项1", 2, 8)
+    }
+    headerText () {
+        this.shortCutText("## 标题", 3, 5)
+    }
+
 }
 export default Eidtor;

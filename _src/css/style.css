@@ -2,17 +2,14 @@
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{ padding: 0; margin: 0; }
 table { border-collapse: collapse; border-spacing: 0; }
 fieldset, img { border: 0; }
-a{
-    text-decoration: none;
-}
 /* 要注意表单元素并不继承父级 font 的问题 */
 
 input,select,img{ vertical-align:middle}
 input,select{ outline:none}
 input,select,textarea{ font-size:100%;}
-ul,ol{ list-style:none }
+
 h1, h2, h3, h4, h5, h6 { font-size: 100%; }
-address,cite,dfn,em,var{font-style:normal;}
+
 
 /* 去掉 firefox 下此元素的边框 */
 abbr,acronym{ border:0;font-variant:normal;}
@@ -22,8 +19,6 @@ fieldset,img{ border:0;}
 
 /* 一致的 del 样式 */
 del { text-decoration:line-through;}
-
-address,caption,cite,code,dfn,em,th,var { font-style:normal;font-weight:500;}
 
 /* ie6 7 8(q) bug 显示为行内表现 */
 iframe{ display:block;}
@@ -151,6 +146,7 @@ body {
 .edit-toolbar,.preview-toolbar{
     float: left;
     width: 50%;
+    list-style:none;
 }
 .preview-toolbar{
     float: right;
