@@ -31,7 +31,6 @@ class Eidtor extends React.Component {
         }
     }
     componentDidMount() {
-
         window.addEventListener('onKeyDown ', this.tooggleFullScreen)
     }
     render() {
@@ -175,16 +174,9 @@ class Eidtor extends React.Component {
         const obj=this.refs.editor;
         let origin=obj.value;
         let preStart=this.getTxt1CursorPosition(obj);
-        alert(preStart)
-
-
-        
-
-        obj.value=origin+string;
+        let preEnd=origin.length;
+        obj.value=preStart!=preEnd?(origin.slice(0, preStart)+string+origin.slice(preStart, preEnd)):(origin+string);
         this.setState({ content: marked(this.refs.editor.value) });
-
-
-
         /*选中*/
         if(string.createTextRange){/*IE浏览器*/
             let range = obj.createTextRange();
@@ -223,6 +215,6 @@ class Eidtor extends React.Component {
     headerText () {
         this.shortCutText("## 标题", 3, 5)
     }
-
+    
 }
 export default Eidtor;
