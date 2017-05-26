@@ -215,6 +215,5 @@ class Eidtor extends React.Component {
     headerText () {
         this.shortCutText("## 标题", 3, 5)
     }
-    
 }
 export default Eidtor;
