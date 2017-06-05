@@ -18,9 +18,9 @@ marked.setOptions({
 });
 
 class Eidtor extends React.Component {
-    static propTypes = {
+   /* static propTypes = {
         content: React.PropTypes.string.isRequired
-    };
+    };*/
     constructor(props){
         super(props);
         this.state = {
