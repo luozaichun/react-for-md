@@ -6,6 +6,11 @@ module.exports = {
     entry: [
         './app/index'
     ],
+    externals: {
+        "react": 'React',
+        'react-dom': 'ReactDOM',
+       /* 'highlight.js':'highlight.js'*/
+    },
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'js/react-markdown.min.js',
