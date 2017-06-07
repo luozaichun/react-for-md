@@ -24,7 +24,8 @@ class Eidtor extends React.Component {
             panelClass: 'mod-panel',
             mode: 'split',
             isFullScreen: false,
-            theme:false
+            theme:false,
+            dia:false
         }
     }
     componentDidMount() {
@@ -52,12 +53,10 @@ class Eidtor extends React.Component {
                         </div>
                     </div>
                 </div>
+                {this.diabox()}
             </div>
         );
     }
-    handleChange () {
-        this.setState({ content: marked(this.refs.editor.value) });
-    }    
     toolbar(){
        return(
            <ul className="edit-toolbar clearfix">
@@ -66,7 +65,7 @@ class Eidtor extends React.Component {
              <li><a title="链接" onClick={()=>this.linkText()}><i className="fa fa-link"></i></a></li>
              <li><a title="引用" onClick={()=>this.quoteText()}><i className="fa fa-quote-left"></i></a></li>
              <li><a title="代码段" onClick={()=>this.codeText()}><i className="fa fa-code"></i></a></li>
-             <li><a title="图片" onClick={()=>this.pictureText()}><i className="fa fa-picture-o"></i></a></li>
+             <li><a title="图片"  onClick={(_state)=>this.chageState({dia: !this.state.dia})}><i className="fa fa-picture-o"></i></a></li>
              <li><a title="有序列表" onClick={()=>this.list_olText()}><i className="fa fa-list-ol"></i></a></li>
              <li><a title="无序列表" onClick={()=>this.list_ulText()}><i className="fa fa-list-ul"></i></a></li>
              <li><a title="标题" onClick={()=>this.headerText()}><i className="fa fa-header"></i></a></li>
@@ -107,6 +106,39 @@ class Eidtor extends React.Component {
                 </li>
             </ul>  
         ) 
+    }
+    diabox(){
+        const appearClass=classNames([ 'mod-dia', { 'appear': this.state.dia }]);
+        const diaClass=classNames([ 'm-dia', { 'theme-black': this.state.theme }]);
+        return(
+            <div className={appearClass}>
+                <span className="mask" onClick={(_state)=>this.chageState({dia: !this.state.dia})}></span>
+                <div className={diaClass}>
+                    <div className="dia-hd">
+                        <a className="close" href="javascript:;" onClick={(_state)=>this.chageState({dia: !this.state.dia})}>
+                            <i className="fa fa-close"></i>
+                        </a>
+                        <h3>图片</h3>
+                    </div>
+                    <div className="dia-bd">
+                        <p>请输入图片或附件地址</p>
+                        <i className="icon-picture fa fa-picture-o icon-2x"></i>
+                        <input className="pic-link" type="text" placeholder="http://example.com/images/diagram.jpg"/>
+                        <div className="upload-box">
+                            <span><i className="fa fa-cloud-upload"></i>上传本地图片</span>
+                            <input className="upload-bottom" type="file"/>
+                        </div>
+                    </div>
+                    <div className="dia-fd">
+                        <a className="cancel" href="javascript:;" onClick={(_state)=>this.chageState({dia: !this.state.dia})}>取消</a>
+                        <a className="confirm" href="javascript:;" >确定</a>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    handleChange () {
+        this.setState({ content: marked(this.refs.editor.value) });
     }
     chageMode(_mode){
         this.setState({mode: _mode});
