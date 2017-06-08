@@ -228,7 +228,7 @@ body {
 .mod-dia .m-dia{
     position: fixed;
     z-index: 99;
-    opacity: 0;
+    opacity: 1;
     left: 50%;
     width: 560px;
     margin-left: -280px;
@@ -241,20 +241,9 @@ body {
     box-shadow: 0 3px 7px rgba(0,0,0,.3);
     background-color: #F9F9F5;
     color: #2C3E50;
-    top: -25%;
-    -webkit-transition: opacity .3s linear,top .3s ease-out;
-    -moz-transition: opacity .3s linear,top .3s ease-out;
-    -o-transition: opacity .3s linear,top .3s ease-out;
-    transition: opacity .3s linear,top .3s ease-out;
-}
-.mod-dia.appear .m-dia{
     top: 10%;
-    opacity: 1;
-    -webkit-transition: opacity .3s linear,top .3s ease-out;
-    -moz-transition: opacity .3s linear,top .3s ease-out;
-    -o-transition: opacity .3s linear,top .3s ease-out;
-    transition: opacity .3s linear,top .3s ease-out;
 }
+
 .mod-dia .m-dia.theme-black{
     background-color: #444;
     color: #D6DBDF;
@@ -284,7 +273,15 @@ body {
     text-decoration: none;
     cursor: pointer;
     opacity: .4;
-    filter: alpha(opacity=40);
+}
+.mod-dia .m-dia.theme-black .dia-hd .close{
+    color: #ffffff;
+    opacity: .6;
+    text-shadow: 0 1px 0 #fff;
+ }
+.mod-dia .m-dia.theme-black .dia-hd .close:hover{
+    color: #fff;
+    opacity: .4;
 }
 .mod-dia .m-dia .dia-bd{
     position: relative;
@@ -384,9 +381,7 @@ body {
     -webkit-border-radius: 0 0 6px 6px;
     -moz-border-radius: 0 0 6px 6px;
     border-radius: 0 0 6px 6px;
-    -webkit-box-shadow: inset 0 1px 0 #fff;
-    -moz-box-shadow: inset 0 1px 0 #fff;
-    box-shadow: inset 0 1px 0 #fff;
+    border-top: 1px solid #eee;
 }
 .mod-dia .m-dia .dia-fd a{
     text-decoration: none;

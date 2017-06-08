@@ -9,7 +9,15 @@
   <div id="app"></div>
     <script src="/node_modules/react/dist/react.js"></script>
     <script src="/node_modules/react-dom/dist/react-dom.js"></script>
-   <!-- <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="/dist/js/react-markdown.min.js"></script>
+    <script>
+        $(".confirm").on("click",function () {
+            $.post("/add", {}, function (res) {
+                alert(res.msg);
+            })
+
+        })
+    </script>
   </body>
 </html>

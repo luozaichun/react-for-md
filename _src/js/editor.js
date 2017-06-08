@@ -122,16 +122,16 @@ class Eidtor extends React.Component {
                     </div>
                     <div className="dia-bd">
                         <p>请输入图片或附件地址</p>
-                        <i className="icon-picture fa fa-picture-o icon-2x"></i>
-                        <input className="pic-link" type="text" placeholder="http://example.com/images/diagram.jpg"/>
-                        <div className="upload-box">
+                        <i className="icon-picture fa fa-picture-o"></i>
+                        <input className="pic-link" ref="picLink" type="text" placeholder="http://example.com/images/diagram.jpg"/>
+                        <form className="upload-box" method="post" action="/add">
                             <span><i className="fa fa-cloud-upload"></i>上传本地图片</span>
-                            <input className="upload-bottom" type="file"/>
-                        </div>
+                            <input className="upload-bottom" name="upload_pic" type="file"/>
+                        </form>
                     </div>
                     <div className="dia-fd">
                         <a className="cancel" href="javascript:;" onClick={(_state)=>this.chageState({dia: !this.state.dia})}>取消</a>
-                        <a className="confirm" href="javascript:;" >确定</a>
+                        <a className="confirm" href="javascript:;" onClick={()=>this.pictureText()}>确定</a>
                     </div>
                 </div>
             </div>
@@ -233,7 +233,10 @@ class Eidtor extends React.Component {
         this.shortCutText("```\ncode block\n```", 4, 14)
     }
     pictureText () {
-        this.shortCutText("![alt](www.link.com)", 2, 5)
+        let _link=this.refs.picLink.value;
+        this.shortCutText("![alt]("+_link+")", 2, 5);
+        this.refs.picLink.value="";
+        this.chageState({dia: !this.state.dia});
     }
     list_olText () {
         this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
