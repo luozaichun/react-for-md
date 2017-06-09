@@ -14,7 +14,6 @@
     <script>
         $(".confirm").on("click",function () {
             $.post("/add", {}, function (res) {
-                alert(res.msg);
             })
 
         })

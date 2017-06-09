@@ -45,7 +45,7 @@ const respond = function (static_url, callback) {
             });
             busboy.on('finish', function() {
                 res.writeHead(200);
-                res.end('upload OK!');
+                res.end('upload2 OK!');
             });
             return req.pipe(busboy);
         }

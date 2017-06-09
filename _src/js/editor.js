@@ -124,7 +124,7 @@ class Eidtor extends React.Component {
                         <p>请输入图片或附件地址</p>
                         <i className="icon-picture fa fa-picture-o"></i>
                         <input className="pic-link" ref="picLink" type="text" placeholder="http://example.com/images/diagram.jpg"/>
-                        <form className="upload-box" method="post" action="/add">
+                        <form className="upload-box" method="post" action="/add" encType="multipart/form-data">
                             <span><i className="fa fa-cloud-upload"></i>上传本地图片</span>
                             <input className="upload-bottom" name="upload_pic" type="file"/>
                         </form>
