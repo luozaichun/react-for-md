@@ -9,7 +9,7 @@ module.exports = {
     externals: {
         "react": 'React',
         'react-dom': 'ReactDOM',
-       /* 'highlight.js':'highlight.js'*/
+        /*'highlight.js':'highlight.js'*/
     },
     output: {
         path: path.join(__dirname, 'dist'),

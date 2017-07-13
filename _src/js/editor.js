@@ -2,7 +2,6 @@ import React from 'react';
 import marked from 'marked';
 import highlight from "highlight.js";
 import classNames from 'classnames';
-
 marked.setOptions({
     renderer: new marked.Renderer(),
     gfm: true,
@@ -124,9 +123,9 @@ class Eidtor extends React.Component {
                         <p>请输入图片或附件地址</p>
                         <i className="icon-picture fa fa-picture-o"></i>
                         <input className="pic-link" ref="picLink" type="text" placeholder="http://example.com/images/diagram.jpg"/>
-                        <form className="upload-box" method="post" action="/add" encType="multipart/form-data">
+                        <form id="form" className="upload-box" method="post" action="/upload" encType="multipart/form-data">
                             <span><i className="fa fa-cloud-upload"></i>上传本地图片</span>
-                            <input className="upload-bottom" name="upload_pic" type="file"/>
+                            <input className="upload-bottom" name="pics" type="file"/>
                         </form>
                     </div>
                     <div className="dia-fd">
@@ -233,10 +232,12 @@ class Eidtor extends React.Component {
         this.shortCutText("```\ncode block\n```", 4, 14)
     }
     pictureText () {
-        let _link=this.refs.picLink.value;
+        /*let _link=this.refs.picLink.value;
         this.shortCutText("![alt]("+_link+")", 2, 5);
         this.refs.picLink.value="";
-        this.chageState({dia: !this.state.dia});
+        this.chageState({dia: !this.state.dia});*/
+
+        document.getElementById("form").submit();
     }
     list_olText () {
         this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
