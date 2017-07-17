@@ -4,7 +4,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     devtool: false,
     entry: [
-        './app/index'
+        './_src/index'
     ],
     externals: {
         "react": 'React',

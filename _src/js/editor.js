@@ -123,14 +123,14 @@ class Eidtor extends React.Component {
                         <p>请输入图片或附件地址</p>
                         <i className="icon-picture fa fa-picture-o"></i>
                         <input className="pic-link" ref="picLink" type="text" placeholder="http://example.com/images/diagram.jpg"/>
-                        <form id="form" className="upload-box" method="post" action="/upload" encType="multipart/form-data">
+                        <form name="pic-form" className="upload-box" method="post" encType="multipart/form-data">
                             <span><i className="fa fa-cloud-upload"></i>上传本地图片</span>
-                            <input className="upload-bottom" name="pics" type="file"/>
+                            <input ref="uploadPic" className="upload-bottom" name="picture" type="file" onChange={()=>this.inputLink()}/>
                         </form>
                     </div>
                     <div className="dia-fd">
                         <a className="cancel" href="javascript:;" onClick={(_state)=>this.chageState({dia: !this.state.dia})}>取消</a>
-                        <a className="confirm" href="javascript:;" onClick={()=>this.pictureText()}>确定</a>
+                        <a className="confirm" href="javascript:;" onClick={()=>this.pictureOption()}>确定</a>
                     </div>
                 </div>
             </div>
@@ -231,13 +231,35 @@ class Eidtor extends React.Component {
     codeText(){
         this.shortCutText("```\ncode block\n```", 4, 14)
     }
-    pictureText () {
-        /*let _link=this.refs.picLink.value;
-        this.shortCutText("![alt]("+_link+")", 2, 5);
+    inputLink(){
+        let file=this.refs.uploadPic.value;
+        let filename=file.replace(/^.+?\\([^\\]+?)(\.[^\.\\]*?)?$/gi,"$1");
+        let FileExt=file.replace(/.+\./,"");
+        this.refs.picLink.value=filename+'.'+FileExt;
+    }
+    pictureOption () {
+        let val=this.refs.picLink.value;
+        let _link;
+        let regex =/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/i;
+        if(!regex.test(val)){
+            let oData = new FormData(document.forms.namedItem("pic-form"));
+            oData.append("CustomField", "This is some extra data");
+            let oReq = new XMLHttpRequest();
+            oReq.open("POST", "/upload", true);
+            oReq.send(oData);
+            oReq.onreadystatechange = () => {//在这里指定上传成功的回调函数，接受返回值
+                if (oReq.readyState == 4 && oReq.status == 200) {
+                    let res = JSON.parse(oReq.responseText);
+                    _link=res.fileUrl;
+                    this.shortCutText("![alt]("+_link+")", 2, 5);
+                }
+            }; /*指定回调函数*/
+        }else{
+            _link=val;
+            this.shortCutText("![alt]("+_link+")", 2, 5);
+        }
         this.refs.picLink.value="";
-        this.chageState({dia: !this.state.dia});*/
-
-        document.getElementById("form").submit();
+        this.chageState({dia: !this.state.dia});
     }
     list_olText () {
         this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
