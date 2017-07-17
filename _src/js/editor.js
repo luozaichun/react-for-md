@@ -261,6 +261,9 @@ class Eidtor extends React.Component {
         this.refs.picLink.value="";
         this.chageState({dia: !this.state.dia});
     }
+    pasteImg() {
+
+    }
     list_olText () {
         this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
     }
