@@ -36,6 +36,7 @@ let upload = multer({ storage: storage });
 // 单图上传
 app.post(config.route, upload.single(config.input_name), function(req, res, next){
     let file = req.file;
+    console.log(file)
     res.send({
         code: '1',
         fileUrl:file.destination+file.filename

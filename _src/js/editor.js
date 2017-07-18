@@ -28,7 +28,8 @@ class Eidtor extends React.Component {
         }
     }
     componentDidMount() {
-        window.addEventListener('onKeyDown ', this.tooggleFullScreen)
+        window.addEventListener('onKeyDown ', this.tooggleFullScreen);
+        this.pasteImg();
     }
     render() {
         const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'fullscreen': this.state.isFullScreen },{ 'dark': this.state.theme} ]);
@@ -41,7 +42,7 @@ class Eidtor extends React.Component {
                     {this.modebar()}
                 </div>
                 <div className="m-content">
-                    <div className={editorClass}>
+                    <div className={editorClass} ref="editorBox" name="picture">
                         <div className="m-editor">
                             <textarea name="content" ref="editor" onChange={this.handleChange.bind(this)}></textarea>
                         </div>
@@ -242,18 +243,7 @@ class Eidtor extends React.Component {
         let _link;
         let regex =/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/i;
         if(!regex.test(val)){
-            let oData = new FormData(document.forms.namedItem("pic-form"));
-            oData.append("CustomField", "This is some extra data");
-            let oReq = new XMLHttpRequest();
-            oReq.open("POST", "/upload", true);
-            oReq.send(oData);
-            oReq.onreadystatechange = () => {//在这里指定上传成功的回调函数，接受返回值
-                if (oReq.readyState == 4 && oReq.status == 200) {
-                    let res = JSON.parse(oReq.responseText);
-                    _link=res.fileUrl;
-                    this.shortCutText("![alt]("+_link+")", 2, 5);
-                }
-            }; /*指定回调函数*/
+            this.formData(document.forms.namedItem("pic-form"),1)
         }else{
             _link=val;
             this.shortCutText("![alt]("+_link+")", 2, 5);
@@ -261,8 +251,52 @@ class Eidtor extends React.Component {
         this.refs.picLink.value="";
         this.chageState({dia: !this.state.dia});
     }
+    formData(e,type){/*0:粘贴上传，1：点击上传*/
+        let _link,oData;
+        if(type==1){
+            oData = new FormData(e);
+        }else{
+            oData = new FormData();
+            oData.append('file', e);
+            oData.append('name', "picture");
+        }
+        oData.append("CustomField", "This is some extra data");
+        let oReq = new XMLHttpRequest();
+        oReq.open("POST", "/upload", true);
+        oReq.send(oData);
+        oReq.onreadystatechange = () => {//在这里指定上传成功的回调函数，接受返回值
+            if (oReq.readyState == 4 && oReq.status == 200) {
+                let res = JSON.parse(oReq.responseText);
+                _link=res.fileUrl;
+                this.shortCutText("![alt]("+_link+")", 2, 5);
+            }
+        }; /*指定回调函数*/
+    }
     pasteImg() {
-
+        let _this=this;
+        this.refs.editorBox.addEventListener('paste', function(e) {
+            let clipboardData = event.clipboardData,
+                i = 0, items, item, types;
+            if (clipboardData) {
+                items = clipboardData.items;
+                if (!items)
+                    return;
+                item = items[0];
+                /*保存在剪贴板中的数据类型*/
+                types = clipboardData.types || [];
+                for (; i < types.length; i++) {
+                    if (types[i] === 'Files') {
+                        item = items[i];
+                        break;
+                    }
+                }
+                console.log(item)
+                /*判断是否为图片数据*/
+                if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
+                    _this.formData(item.getAsFile(),0)
+                }
+            }
+        })
     }
     list_olText () {
         this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
