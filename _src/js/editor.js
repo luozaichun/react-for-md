@@ -2,6 +2,7 @@ import React from 'react';
 import marked from 'marked';
 import highlight from "highlight.js";
 import classNames from 'classnames';
+import config from '../../upload.json';
 marked.setOptions({
     renderer: new marked.Renderer(),
     gfm: true,
@@ -251,27 +252,6 @@ class Eidtor extends React.Component {
         this.refs.picLink.value="";
         this.chageState({dia: !this.state.dia});
     }
-    formData(e,type){/*0:粘贴上传，1：点击上传*/
-        let _link,oData;
-        if(type==1){
-            oData = new FormData(e);
-        }else{
-            oData = new FormData();
-            oData.append('file', e);
-            oData.append('name', "picture");
-        }
-        oData.append("CustomField", "This is some extra data");
-        let oReq = new XMLHttpRequest();
-        oReq.open("POST", "/upload", true);
-        oReq.send(oData);
-        oReq.onreadystatechange = () => {//在这里指定上传成功的回调函数，接受返回值
-            if (oReq.readyState == 4 && oReq.status == 200) {
-                let res = JSON.parse(oReq.responseText);
-                _link=res.fileUrl;
-                this.shortCutText("![alt]("+_link+")", 2, 5);
-            }
-        }; /*指定回调函数*/
-    }
     pasteImg() {
         let _this=this;
         this.refs.editorBox.addEventListener('paste', function(e) {
@@ -290,13 +270,32 @@ class Eidtor extends React.Component {
                         break;
                     }
                 }
-                console.log(item)
                 /*判断是否为图片数据*/
                 if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
                     _this.formData(item.getAsFile(),0)
                 }
             }
         })
+    }
+    formData(e,type){/*0:粘贴上传，1：点击上传*/
+        let _link,oData;
+        if(type==1){
+            oData = new FormData(e);
+        }else{
+            oData = new FormData();
+            oData.append('file', e);
+        }
+        oData.append("CustomField", "This is some extra data");
+        let oReq = new XMLHttpRequest();
+        oReq.open("POST", config.route, true);
+        oReq.send(oData);
+        oReq.onreadystatechange = () => {//在这里指定上传成功的回调函数，接受返回值
+            if (oReq.readyState == 4 && oReq.status == 200) {
+                let res = JSON.parse(oReq.responseText);
+                _link=res.fileUrl;
+                this.shortCutText("![alt]("+_link+")", 2, 5);
+            }
+        }; /*指定回调函数*/
     }
     list_olText () {
         this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)

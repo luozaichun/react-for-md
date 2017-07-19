@@ -1,51 +1,65 @@
 let fs = require('fs');
 let path = require('path');
 let express = require('express');
-let multer  = require('multer');
-let config=require('./upload.json');
+let formidable = require('formidable');
+let config = require('./upload.json');
 let app = express();
-
 app.use(express.static(path.join(__dirname, '/')));
 
-let createFolder = function(folder){
-    try{
-        fs.accessSync(folder);
-    }catch(e){
-        fs.mkdirSync(folder);
+let uploadFile = (req, success, error) => {
+    let form = new formidable.IncomingForm(); // 创建上传表单
+    form.uploadDir = config.upload_path; // 设置上传目录
+    form.keepExtensions = true; // 保留后缀
+    form.maxFieldsSize = 3 * 1024 * 1024; // 文件大小
+
+    // 如果temp目录不存在则创建
+    if (!fs.existsSync(form.uploadDir)) {
+        fs.mkdirSync(form.uploadDir);
     }
+    form
+        .on('error', function (err) {
+            error(err);
+        })
+        .on('file', function (name, file) {
+            let extName = ''; //后缀名
+            switch (file.type) {
+                case 'image/pjpeg':
+                    extName = 'jpg';
+                    break;
+                case 'image/jpeg':
+                    extName = 'jpg';
+                    break;
+                case 'image/png':
+                    extName = 'png';
+                    break;
+                case 'image/x-png':
+                    extName = 'png';
+                    break;
+                default:
+                    this.emit('error', "不允许的类型");
+            }
+            file[name] = file;
+            fs.renameSync(file.path, file.path);//重命名
+            success(file.path)
+        });
+    form.parse(req); //解析request对象
 };
 
-
-createFolder(config.upload_path);
-
-// 通过 filename 属性定制
-let storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, config.upload_path);    // 保存的路径，备注：需要自己创建
-    },
-    filename: function (req, file, cb) {
-        // 将保存文件名设置为 字段名 + 时间戳+后缀，
-        let fileformat = (file.originalname).split('.');
-        cb(null, file.fieldname + Date.now()+'.' + fileformat[fileformat.length - 1]);
-    }
-});
-
-// 通过 storage 选项来对 上传行为 进行定制化
-let upload = multer({ storage: storage });
-
-// 单图上传
-app.post(config.route, upload.single(config.input_name), function(req, res, next){
-    let file = req.file;
-    console.log(file)
-    res.send({
-        code: '1',
-        fileUrl:file.destination+file.filename
-    });
-});
-
-app.get('/', function(req, res, next){
+app.get('/', (req, res, next) => {
     let index = fs.readFileSync('./views/index.html', {encoding: 'utf8'});
     res.send(index);
 });
+// 上传
+app.post(config.route, (req, res, next) => {
+    uploadFile(req, (path) => {
+            res.json({
+                fileUrl: path
+            });
+        },
+        (err) => {
+            res.json(err);
+        });
+});
+
 
 module.exports = app;

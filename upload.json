@@ -1,5 +1,5 @@
 {
-  "upload_path":"./upload/",
+  "upload_path":"./uploadTemp",
   "input_name":"picture",
   "route":"/upload"
 }
