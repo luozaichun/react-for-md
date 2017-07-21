@@ -93,7 +93,6 @@ class Eidtor extends React.Component {
                         <i className="fa fa-eye"></i>
                     </a>
                 </li>
-                
                 <li>
                     <a className={actCheck("split")} onClick={(split)=>this.chageMode("split")} title="分屏模式">
                         <i className="fa fa-columns"></i>
@@ -102,6 +101,17 @@ class Eidtor extends React.Component {
                 <li>
                     <a className={actCheck("edit")} onClick={(edit)=>this.chageMode("edit")} title="编辑模式">
                         <i className="fa fa-pencil"></i>
+                    </a>
+                </li>
+                <li>
+                    <a className={actCheck("edit")} onClick={(edit)=>this.chageMode("edit")} title="编辑模式">
+                        <i className="fa fa-pencil"></i>
+                    </a>
+                </li>
+                <li>
+                    <a className="publish" onClick={()=>this.publish()} title="立即发布">
+                        <i className="fa fa-share-square-o"></i>
+                        <span>发布</span>
                     </a>
                 </li>
             </ul>  
