@@ -1,6 +1,5 @@
 import React from 'react';
 import marked from 'marked';
-import highlight from "highlight.js";
 import classNames from 'classnames';
 import config from '../../upload.json';
 marked.setOptions({
@@ -13,7 +12,7 @@ marked.setOptions({
     smartLists: true,
     smartypants: false,
     highlight: function (code) {
-        return highlight.highlightAuto(code).value;
+        return hljs.highlightAuto(code).value;
     }
 });
 

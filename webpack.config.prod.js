@@ -9,7 +9,6 @@ module.exports = {
     externals: {
         "react": 'React',
         'react-dom': 'ReactDOM',
-        /*'highlight.js':'highlight.js'*/
     },
     output: {
         path: path.join(__dirname, 'dist'),
@@ -37,7 +36,11 @@ module.exports = {
         },{
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('style', 'css-loader?sourceMap!autoprefixer-loader?browsers=last 2 versions')
-        }]
+        },
+         {
+            test: /\.json$/,
+            loader: 'json-loader'
+         }]
     },
     /*webpack-dev-server配置*/
     /*devServer: {
