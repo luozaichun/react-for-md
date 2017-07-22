@@ -75,11 +75,6 @@ body {
     width: 50%;
     height: 100%;
     background-color: #f1f1f1;
-    -webkit-transition: width 0.2s linear;
-    -moz-transition: width 0.2s linear;
-    -ms-transition: width 0.2s linear;
-    -o-transition: width 0.2s linear;
-    transition: width 0.2s linear;
     position: relative;
 }
 .mod-preview{
@@ -87,19 +82,10 @@ body {
 }
 .mod-editor.main-mode,.mod-preview.main-mode{
     width: 100%;
-    -webkit-transition: width 0.3s linear;
-    -moz-transition: width 0.3s linear;
-    -ms-transition: width 0.3s linear;
-    -o-transition: width 0.3s linear;
-    transition: width 0.3s linear;
 }
+
 .mod-preview.hidden,.mod-editor.hidden{
     width: 0;
-    -webkit-transition: width 0.3s linear;
-    -moz-transition: width 0.3s linear;
-    -ms-transition: width 0.3s linear;
-    -o-transition: width 0.3s linear;
-    transition: width 0.3s linear;
 }
 .mod-editor .m-editor,.mod-preview .m-preview{
     font:13.34px helvetica,arial,freesans,clean,sans-serif;
@@ -108,12 +94,9 @@ body {
     width: 100%;
     overflow:hidden;
     height: 90%;
-    padding: 2% 0;
+    padding: 10px 0;
 }
-.mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-editor{
-    height: 90%;
-    padding: 1% 0;
-}
+
 .mod-editor textarea{
     overflow-y: auto;
     overflow-x: hidden;
@@ -122,9 +105,8 @@ body {
     font-size: 18px;
     background-color: #f1f1f1;
     height: 100%;
-    padding: 0 3%;
-    max-width: 94%;
     width: 94%;
+    padding: 0 3%;
     line-height: 1.5;
 }
 .mod-editor:after{
@@ -469,9 +451,7 @@ body {
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 0 3%;
-    max-width: 94%;
-    width: 94%;
+    padding: 0 15px;
 }
 
 .markdown-body .pl-c {
@@ -1166,4 +1146,8 @@ body {
 
 .markdown-body hr {
     border-bottom-color: #eee;
+}
+.mod-panel.dark .markdown-body blockquote{
+    border-color: #333;
+    background: none repeat scroll 0 0 rgba(51,51,51,.5);
 }

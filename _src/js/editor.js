@@ -306,17 +306,21 @@ class Eidtor extends React.Component {
         }
         oReq.send(oData);
         oReq.onreadystatechange = () => {//在这里指定上传成功的回调函数，接受返回值
-            if (oReq.readyState == 4 && oReq.status == 200&&type==0) {
-                let res = JSON.parse(oReq.responseText);
-                _link=res.fileUrl;
-                this.shortCutText("![alt]("+_link+")", 2, 5);
+            if (oReq.readyState == 4 && oReq.status == 200) {
+                if(type==0){
+                    let res = JSON.parse(oReq.responseText);
+                    _link=res.fileUrl;
+                    this.shortCutText("![alt]("+_link+")", 2, 5);
+                }else{
+                    this.chageMode("preview");
+                }
             }
         }; /*指定回调函数*/
     }
     /*发布*/
     publish(){
         let _html='<div className="markdown-body">'+this.state.content+'</div>';
-        this.formData("publish_data",_html,1)
+        this.formData("publishData",_html,1)
     }
 }
 export default Eidtor;
