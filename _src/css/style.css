@@ -160,6 +160,7 @@ body {
     float: right;
     margin-right: 25px;
     line-height: 21px;
+    cursor: pointer;
 }
 .edit-toolbar li:nth-child(3),.edit-toolbar li:nth-child(7){
     margin-left: 35px;
@@ -191,6 +192,26 @@ body {
 .edit-toolbar li a.act i,.preview-toolbar li a.act i{
     color: #5eb95e;
 }
+.preview-toolbar li a.publish{
+    padding: 0 10px;
+}
+
+.preview-toolbar li .publish i{
+    color: #5BA4E5;
+    margin-right: 8px;
+    font-size: 18px;
+    vertical-align: middle;
+}
+.preview-toolbar li .publish span{
+    font-size: 14px;
+    color: #5BA4E5;
+}
+.preview-toolbar li a.publish:hover {
+    box-shadow: 0 1px 1px rgba(0,0,0,.075) inset,0 0 8px rgba(82,168,236,.6)!important;
+}
+.preview-toolbar li a.publish:hover i{
+    color: #5BA4E5;
+}
 .mod-panel.dark .mod-tool{
     background-color: #000000;
 }
@@ -203,6 +224,7 @@ body {
 .mod-panel.dark .mod-editor .m-editor ,.mod-panel.dark .mod-editor .m-editor textarea,.mod-panel.dark .mod-preview .m-preview .markdown-body{
     color: #D6DBDF;
 }
+
 /*弹窗*/
 .mod-dia{
     position: fixed;

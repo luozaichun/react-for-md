@@ -2,10 +2,9 @@ let fs = require('fs');
 let path = require('path');
 let express = require('express');
 let formidable = require('formidable');
-let config = require('./upload.json');
+let config = require('./config.json');
 let app = express();
 app.use(express.static(path.join(__dirname, '/')));
-
 let uploadFile = (req, success, error) => {
     let form = new formidable.IncomingForm(); // 创建上传表单
     form.uploadDir = config.upload_path; // 设置上传目录
@@ -50,7 +49,7 @@ app.get('/', (req, res, next) => {
     res.send(index);
 });
 // 上传
-app.post(config.route, (req, res, next) => {
+app.post(config.upload_route, (req, res, next) => {
     uploadFile(req, (path) => {
             res.json({
                 fileUrl: path
@@ -60,6 +59,11 @@ app.post(config.route, (req, res, next) => {
             res.json(err);
         });
 });
-
+app.post(config.publish_route, (req, res, next) => {
+    let data =new formidable.IncomingForm();
+    data.parse(req,(err,fields,files)=>{
+        res.json(fields);
+    })
+});
 
 module.exports = app;

@@ -1,7 +1,7 @@
 import React from 'react';
 import marked from 'marked';
 import classNames from 'classnames';
-import config from '../../upload.json';
+import config from '../../config.json';
 marked.setOptions({
     renderer: new marked.Renderer(),
     gfm: true,
@@ -49,6 +49,9 @@ class Eidtor extends React.Component {
                     </div>
                     <div className={previewClass}>
                         <div className="m-preview">
+                            <form action="">
+
+                            </form>
                             <div className="markdown-body" dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
                         </div>
                     </div>
@@ -96,11 +99,6 @@ class Eidtor extends React.Component {
                 <li>
                     <a className={actCheck("split")} onClick={(split)=>this.chageMode("split")} title="分屏模式">
                         <i className="fa fa-columns"></i>
-                    </a>
-                </li>
-                <li>
-                    <a className={actCheck("edit")} onClick={(edit)=>this.chageMode("edit")} title="编辑模式">
-                        <i className="fa fa-pencil"></i>
                     </a>
                 </li>
                 <li>
@@ -242,6 +240,16 @@ class Eidtor extends React.Component {
     codeText(){
         this.shortCutText("```\ncode block\n```", 4, 14)
     }
+    list_olText () {
+        this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
+    }
+    list_ulText () {
+        this.shortCutText("- 无序列表项0\n- 无序列表项1", 2, 8)
+    }
+    headerText () {
+        this.shortCutText("## 标题", 3, 5)
+    }
+    /*上传图片*/
     inputLink(){
         let file=this.refs.uploadPic.value;
         let filename=file.replace(/^.+?\\([^\\]+?)(\.[^\.\\]*?)?$/gi,"$1");
@@ -253,7 +261,7 @@ class Eidtor extends React.Component {
         let _link;
         let regex =/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/i;
         if(!regex.test(val)){
-            this.formData(document.forms.namedItem("pic-form"),1)
+            this.formData("inputfile",this.refs.uploadPic.files[0],0)
         }else{
             _link=val;
             this.shortCutText("![alt]("+_link+")", 2, 5);
@@ -281,39 +289,34 @@ class Eidtor extends React.Component {
                 }
                 /*判断是否为图片数据*/
                 if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
-                    _this.formData(item.getAsFile(),0)
+                    _this.formData('file',item.getAsFile(),0)
                 }
             }
         })
     }
-    formData(e,type){/*0:粘贴上传，1：点击上传*/
+    formData(name,e,type){/*0:上传图片，1:发布*/
         let _link,oData;
-        if(type==1){
-            oData = new FormData(e);
-        }else{
-            oData = new FormData();
-            oData.append('file', e);
-        }
-        oData.append("CustomField", "This is some extra data");
+        oData = new FormData();
+        oData.append(name, e);
         let oReq = new XMLHttpRequest();
-        oReq.open("POST", config.route, true);
+        if(type==0){
+            oReq.open("POST", config.upload_route, true);
+        }else{
+            oReq.open("POST", config.publish_route, true);
+        }
         oReq.send(oData);
         oReq.onreadystatechange = () => {//在这里指定上传成功的回调函数，接受返回值
-            if (oReq.readyState == 4 && oReq.status == 200) {
+            if (oReq.readyState == 4 && oReq.status == 200&&type==0) {
                 let res = JSON.parse(oReq.responseText);
                 _link=res.fileUrl;
                 this.shortCutText("![alt]("+_link+")", 2, 5);
             }
         }; /*指定回调函数*/
     }
-    list_olText () {
-        this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
-    }
-    list_ulText () {
-        this.shortCutText("- 无序列表项0\n- 无序列表项1", 2, 8)
-    }
-    headerText () {
-        this.shortCutText("## 标题", 3, 5)
+    /*发布*/
+    publish(){
+        let _html='<div className="markdown-body">'+this.state.content+'</div>';
+        this.formData("publish_data",_html,1)
     }
 }
 export default Eidtor;
