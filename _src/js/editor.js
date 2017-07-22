@@ -2,19 +2,10 @@ import React from 'react';
 import marked from 'marked';
 import classNames from 'classnames';
 import config from '../../config.json';
-marked.setOptions({
-    renderer: new marked.Renderer(),
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false,
-    sanitize: false,
-    smartLists: true,
-    smartypants: false,
-    highlight: function (code) {
-        return hljs.highlightAuto(code).value;
-    }
-});
+let renderer = new marked.Renderer();
+    renderer.code = (code)=>{
+    return '<pre class="prettyprint linenums">' + code + '</pre>';
+};
 
 class Eidtor extends React.Component {
     constructor(props){
@@ -28,7 +19,6 @@ class Eidtor extends React.Component {
         }
     }
     componentDidMount() {
-        window.addEventListener('onKeyDown ', this.tooggleFullScreen);
         this.pasteImg();
     }
     render() {
@@ -146,7 +136,7 @@ class Eidtor extends React.Component {
         )
     }
     handleChange () {
-        this.setState({ content: marked(this.refs.editor.value) });
+        this.setState({ content: marked(this.refs.editor.value,{renderer:renderer}) },prettyPrint);
     }
     chageMode(_mode){
         this.setState({mode: _mode});
@@ -213,7 +203,7 @@ class Eidtor extends React.Component {
         let preStart=this.getTxt1CursorPosition(obj);
         let preEnd=origin.length;
         obj.value=preStart!=preEnd?(origin.slice(0, preStart)+string+origin.slice(preStart, preEnd)):(origin+string);
-        this.setState({ content: marked(this.refs.editor.value) });
+        this.setState({ content: marked(this.refs.editor.value,{renderer:renderer}) });
         /*选中*/
         if(string.createTextRange){/*IE浏览器*/
             let range = obj.createTextRange();

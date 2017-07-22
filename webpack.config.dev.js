@@ -6,7 +6,8 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',
-        './_src/index'
+        './_src/index',
+        './_src/lib/prettyprint.js'
     ],
     output: {
         path: path.join(__dirname, 'dist'),

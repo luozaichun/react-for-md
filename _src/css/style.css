@@ -89,14 +89,16 @@ body {
 }
 .mod-editor .m-editor,.mod-preview .m-preview{
     font:13.34px helvetica,arial,freesans,clean,sans-serif;
-    color:black;
+    color:#2C3E50;
     line-height:1.4em;
     width: 100%;
     overflow:hidden;
     height: 90%;
     padding: 10px 0;
 }
-
+.mod-preview .m-preview p{
+    color:#2C3E50;
+}
 .mod-editor textarea{
     overflow-y: auto;
     overflow-x: hidden;
@@ -1150,4 +1152,7 @@ body {
 .mod-panel.dark .markdown-body blockquote{
     border-color: #333;
     background: none repeat scroll 0 0 rgba(51,51,51,.5);
+}
+.mod-panel.dark .markdown-body h1,.mod-panel.dark .markdown-body h2{
+    border-bottom: 1px dashed #eaecef;
 }

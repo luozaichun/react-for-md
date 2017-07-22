@@ -4,7 +4,8 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     devtool: false,
     entry: [
-        './_src/index'
+        './_src/index',
+        './_src/lib/prettyprint.js'
     ],
     externals: {
         "react": 'React',
