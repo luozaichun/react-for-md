@@ -66,7 +66,7 @@ body {
 }
 .mod-panel .m-content{
     overflow: hidden;
-    height: 100%;
+    height: 97%;
 }
 .mod-editor,.mod-preview{
     float: left;
@@ -83,7 +83,10 @@ body {
 .mod-editor.main-mode,.mod-preview.main-mode{
     width: 100%;
 }
-
+.mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-preview{
+    width: 850px;
+    margin: 0 auto;
+}
 .mod-preview.hidden,.mod-editor.hidden{
     width: 0;
 }
@@ -93,10 +96,14 @@ body {
     line-height:1.4em;
     width: 100%;
     overflow:hidden;
-    height: 90%;
-    padding: 10px 0;
+    height: 89%;
+    padding: 20px 0;
 }
-.mod-preview .m-preview p{
+.mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-preview{
+    width: 850px;
+    margin: 0 auto;
+}
+.mod-preview .m-preview{
     color:#2C3E50;
 }
 .mod-editor textarea{
@@ -126,6 +133,7 @@ body {
     background-color: #444;
     padding: 15px 20px;
     box-shadow: 0 1px 1px rgba(0,0,0,.2);
+    height: 3%;
 }
 .edit-toolbar,.preview-toolbar{
     float: left;
