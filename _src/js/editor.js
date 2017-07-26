@@ -132,14 +132,6 @@ class Eidtor extends React.Component {
             </div>
         )
     }
-    toScroll(ob,target){
-        ob.onscroll=()=>{
-            target.scrollTop=this.scrollTop;
-        }
-        /*$('#targetDiv').scroll( function() {
-            $('#sourceDiv').scrollTop($(this).scrollTop());
-        }*/
-    }
     handleChange () {
         this.setState({ content: marked(this.refs.editor.value,{renderer:renderer}) },prettyPrint);
     }
@@ -191,7 +183,6 @@ class Eidtor extends React.Component {
         let scrollRange=src.scrollHeight-src.clientHeight,
         p=src.scrollTop/scrollRange;
         dest.scrollTop=p*(dest.scrollHeight-dest.clientHeight);
-        /*hint.innerHTML=Math.round(100*p)+'%';*/
     }
     monopoly(fn,duration){  /*函数节流*/
         duration=duration || 100;

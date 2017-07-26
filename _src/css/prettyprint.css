@@ -26,7 +26,12 @@ pre .dec { color: #98fb98 } /* decimal         - lightgreen */
 ol.linenums { margin-top: 0; margin-bottom: 0; color: #666 } /* IE indents via margin-left */
 
 /* jiawzhang: polish the code snippet. */
-ol.linenums > li { padding-left: 15px;}
+ol.linenums > li { padding-left: 15px;
+    line-height: 20px;}
+ol.linenums li span{
+    word-break: break-all;
+    white-space: normal;
+}
 pre.prettyprint {
     display: block;
     background-color: #333;

@@ -114,7 +114,7 @@ body {
     font-size: 18px;
     background-color: #f1f1f1;
     height: 100%;
-    width: 94%;
+    width: 98%;
     padding: 0 3%;
     line-height: 1.5;
 }
@@ -462,7 +462,8 @@ body {
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 0 15px;
+    padding: 0 3%;
+    width: 97%;
 }
 
 .markdown-body .pl-c {
@@ -637,40 +638,39 @@ body {
 .markdown-body code,
 .markdown-body kbd,
 .markdown-body pre {
-    font-family: monospace, monospace;
-    font-size: 1em;
+    word-break: break-all ;
+    word-wrap: break-word ;
+    margin-top: 0;
+    margin-bottom: 0;
+    font: 1em "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 .markdown-body hr {
     box-sizing: content-box;
     height: 0;
     overflow: visible;
+    height: 0;
+    margin: 15px 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #dfe2e5;
 }
 
 .markdown-body input {
     font: inherit;
     margin: 0;
-}
-
-.markdown-body input {
     overflow: visible;
+    font-family: inherit;
+    line-height: inherit;
+}
+.markdown-body * {
+    box-sizing: border-box;
 }
 
 .markdown-body [type="checkbox"] {
     box-sizing: border-box;
     padding: 0;
 }
-
-.markdown-body * {
-    box-sizing: border-box;
-}
-
-.markdown-body input {
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-}
-
 .markdown-body a {
     color: #0366d6;
     text-decoration: none;
@@ -682,15 +682,6 @@ body {
 
 .markdown-body strong {
     font-weight: 600;
-}
-
-.markdown-body hr {
-    height: 0;
-    margin: 15px 0;
-    overflow: hidden;
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid #dfe2e5;
 }
 
 .markdown-body hr::before {
@@ -784,17 +775,6 @@ body {
 
 .markdown-body dd {
     margin-left: 0;
-}
-
-.markdown-body code {
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 12px;
-}
-
-.markdown-body pre {
-    margin-top: 0;
-    margin-bottom: 0;
-    font: 12px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 .markdown-body .octicon {
@@ -981,12 +961,10 @@ body {
     font-size: 0.85em;
     color: #6a737d;
 }
-
 .markdown-body ul,
 .markdown-body ol {
-    padding-left: 2em;
+    margin-left: 38px;
 }
-
 .markdown-body ul ul,
 .markdown-body ul ol,
 .markdown-body ol ol,
@@ -1066,16 +1044,12 @@ body {
     content: "\00a0";
 }
 
-.markdown-body pre {
-    word-wrap: normal;
-}
-
 .markdown-body pre>code {
     padding: 0;
     margin: 0;
     font-size: 100%;
     word-break: normal;
-    white-space: pre;
+    white-space: normal;
     background: transparent;
     border: 0;
 }
@@ -1106,8 +1080,6 @@ body {
     margin: 0;
     overflow: visible;
     line-height: inherit;
-    white-space: pre;
-    white-space: pre-wrap;
     word-break: break-all;
     background-color: transparent;
     border: 0;
