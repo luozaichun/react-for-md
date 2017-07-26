@@ -97,7 +97,7 @@ body {
     width: 100%;
     overflow:hidden;
     height: 89%;
-    padding: 20px 0;
+    margin: 20px 0;
     position: relative;
 }
 .mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-preview{
@@ -108,9 +108,9 @@ body {
     color:#2C3E50;
 }
 .mod-editor textarea{
-  /*  overflow-y: auto;
-    overflow-x: hidden;*/
-    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 100%;
     border: 0;
     color: #2C3E50;
     font-size: 18px;
@@ -118,9 +118,9 @@ body {
     width: 96%;
     padding: 0 3%;
     line-height: 1.5;
-    position: absolute;
+   /* position: absolute;
     top: 0;
-    left: 0;
+    left: 0;*/
 }
 .mod-editor:after{
     content: '';

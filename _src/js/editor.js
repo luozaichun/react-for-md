@@ -34,15 +34,9 @@ class Eidtor extends React.Component {
                     {this.modebar()}
                 </div>
                 <div className="m-content">
-
                     <div className={editorClass} ref="editorBox" name="picture">
-                        <div ref="editorBox" className="m-editor">
-                            <textarea name="content" ref="editor" onScroll={this.monopoly.call(this,(evt)=>this.updateScroll(this.refs.editor,this.refs.markdownBody))} onChange={()=>{this.handleChange.bind(this);this.scrollBar(this.refs.editorBox,this.refs.editor)}}></textarea>
-                            <div className="mod-scroll">
-                                <div ref="scrollBox" className="m-scroll">
-                                    <span></span>
-                                </div>
-                            </div>
+                        <div className="m-editor">
+                            <textarea name="content" ref="editor" onScroll={this.monopoly.call(this,(evt)=>this.updateScroll(this.refs.editor,this.refs.markdownBody))} onChange={this.handleChange.bind(this)}></textarea>
                         </div>
                     </div>
                     <div className={previewClass}>
@@ -142,7 +136,11 @@ class Eidtor extends React.Component {
         )
     }
     handleChange () {
+        let _this=this;
         this.setState({ content: marked(this.refs.editor.value,{renderer:renderer}) },prettyPrint);
+/*
+        _this.scrollBar(_this.refs.previewBox,_this.refs.markdownBody)
+*/
     }
     chageMode(_mode){
         this.setState({mode: _mode});
@@ -348,13 +346,13 @@ class Eidtor extends React.Component {
 
 
     /*滚动条*/
-    scrollBar(mainBox, contentBox){
+    /*scrollBar(mainBox, contentBox){
         let scrollDiv = this.refs.scrollBox;
         this._resizeScorll(scrollDiv, mainBox, contentBox);
         this._tragScroll(scrollDiv, mainBox, contentBox);
         this._wheelChange(scrollDiv, mainBox, contentBox);
         this._clickScroll(scrollDiv, mainBox, contentBox);
-    }
+    }*/
     _bind(obj, type, handler) {
         let node = typeof obj == "string" ? $(obj) : obj;
         if (node.addEventListener) {
@@ -391,7 +389,13 @@ class Eidtor extends React.Component {
     //调整滚动条
     _resizeScorll(element, mainBox, contentBox) {
         let p = element.parentNode;
-        let conHeight=contentBox.offsetHeight;
+        let conHeight=contentBox.scrollHeight-contentBox.scrollTop;
+      /*  console.log("clientHeight")
+        console.log(contentBox.clientHeight)
+        console.log("scrollTop")
+        console.log(contentBox.scrollTop)
+        console.log("conHeight")
+        console.log(conHeight)*/
         let _width = mainBox.clientWidth;
         let _height = mainBox.clientHeight;
         let _scrollWidth = element.offsetWidth;
