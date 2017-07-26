@@ -138,6 +138,7 @@ body {
 .edit-toolbar,.preview-toolbar{
     float: left;
     width: 50%;
+    height: 100%;
     list-style:none;
 }
 .preview-toolbar{
@@ -146,7 +147,7 @@ body {
 .edit-toolbar li{
     float: left;
     margin-left: 15px;
-    line-height: 21px;
+    line-height: 26px;
 }
 .preview-toolbar li{
     float: right;

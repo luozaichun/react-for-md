@@ -135,6 +135,14 @@ class Eidtor extends React.Component {
             </div>
         )
     }
+    toScroll(ob,target){
+        ob.onscroll=()=>{
+            target.scrollTop=this.scrollTop;
+        }
+        /*$('#targetDiv').scroll( function() {
+            $('#sourceDiv').scrollTop($(this).scrollTop());
+        }*/
+    }
     handleChange () {
         this.setState({ content: marked(this.refs.editor.value,{renderer:renderer}) },prettyPrint);
     }
@@ -302,14 +310,16 @@ class Eidtor extends React.Component {
                     _link=res.fileUrl;
                     this.shortCutText("![alt]("+_link+")", 2, 5);
                 }else{
-                    this.chageMode("preview");
+                    if(JSON.parse(oReq.responseText).code==1){
+                        this.chageMode("preview");
+                    }
                 }
             }
         }; /*指定回调函数*/
     }
     /*发布*/
     publish(){
-        let _html='<div className="markdown-body">'+this.state.content+'</div>';
+        let _html='<div class="markdown-body">'+this.state.content+'</div>';
         this.formData("publishData",_html,1)
     }
 }

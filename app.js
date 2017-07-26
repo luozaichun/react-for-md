@@ -62,7 +62,8 @@ app.post(config.upload_route, (req, res, next) => {
 app.post(config.publish_route, (req, res, next) => {
     let data =new formidable.IncomingForm();
     data.parse(req,(err,fields,files)=>{
-        res.json(fields);
+        if(err) return err;
+        res.json({code: 1, fields: fields});
     })
 });
 
