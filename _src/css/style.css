@@ -98,6 +98,7 @@ body {
     overflow:hidden;
     height: 89%;
     padding: 20px 0;
+    position: relative;
 }
 .mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-preview{
     width: 850px;
@@ -107,16 +108,19 @@ body {
     color:#2C3E50;
 }
 .mod-editor textarea{
-    overflow-y: auto;
-    overflow-x: hidden;
+  /*  overflow-y: auto;
+    overflow-x: hidden;*/
+    height: 100%;
     border: 0;
     color: #2C3E50;
     font-size: 18px;
     background-color: #f1f1f1;
-    height: 100%;
-    width: 98%;
+    width: 96%;
     padding: 0 3%;
     line-height: 1.5;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .mod-editor:after{
     content: '';
@@ -1137,3 +1141,5 @@ body {
 .mod-panel.dark .markdown-body h1,.mod-panel.dark .markdown-body h2{
     border-bottom: 1px dashed #eaecef;
 }
+
+.mod-scroll,.m-scroll{ width:18px; position:absolute; top:0; background:#666; border-radius:10px;}

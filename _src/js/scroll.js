@@ -6,13 +6,14 @@ class Scroll extends React.Component {
         this.state = {
             wheelData: -1,
         }
+
     }
     componentDidMount() {
-        this.scrollBar();
+        this.scrollBar(this.props.scrollParent,this.props.scrollContent);
     }
     render() {
         return (
-            <div className="mod-scroll" mainBox="">
+            <div className="mod-scroll">
                 <div ref="scrollBox" className="m-scroll">
                     <span></span>
                 </div>
@@ -20,11 +21,7 @@ class Scroll extends React.Component {
         )
     }
     /*滚动条*/
-    scrollBar() {
-        let doc = document;
-        let mainBox = doc.getElementById('mainBox');
-    }
-    addScroll(mainBox, contentBox){
+    scrollBar(mainBox, contentBox){
         let scrollDiv = this.refs.scrollBox;
         this._resizeScorll(scrollDiv, mainBox, contentBox);
         this._tragScroll(scrollDiv, mainBox, contentBox);
@@ -66,7 +63,10 @@ class Scroll extends React.Component {
     //调整滚动条
     _resizeScorll(element, mainBox, contentBox) {
         let p = element.parentNode;
-        let conHeight = contentBox.offsetHeight;
+        let conHeight=0;
+        if(contentBox&&contentBox.offsetHeight){
+            conHeight=contentBox.offsetHeight;
+        }
         let _width = mainBox.clientWidth;
         let _height = mainBox.clientHeight;
         let _scrollWidth = element.offsetWidth;
