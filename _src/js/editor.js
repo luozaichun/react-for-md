@@ -34,15 +34,12 @@ class Eidtor extends React.Component {
                 <div className="m-content">
                     <div className={editorClass} ref="editorBox" name="picture">
                         <div className="m-editor">
-                            <textarea name="content" ref="editor" onChange={this.handleChange.bind(this)}></textarea>
+                            <textarea name="content" ref="editor" onScroll={this.monopoly.call(this,(evt)=>this.updateScroll(this.refs.editor,this.refs.markdownBody))} onChange={this.handleChange.bind(this)}></textarea>
                         </div>
                     </div>
                     <div className={previewClass}>
                         <div className="m-preview">
-                            <form action="">
-
-                            </form>
-                            <div className="markdown-body" dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
+                            <div ref="markdownBody" className="markdown-body" onScroll={this.monopoly.call(this,(evt)=>this.updateScroll(this.refs.markdownBody,this.refs.editor))} dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
                         </div>
                     </div>
                 </div>
@@ -188,6 +185,29 @@ class Eidtor extends React.Component {
                 elem.msRequestFullscreen();
             }
         }
+    }
+    updateScroll(src,dest){
+        console.log(3);
+        let scrollRange=src.scrollHeight-src.clientHeight,
+        p=src.scrollTop/scrollRange;
+        dest.scrollTop=p*(dest.scrollHeight-dest.clientHeight);
+        /*hint.innerHTML=Math.round(100*p)+'%';*/
+    }
+    monopoly(fn,duration){  /*函数节流*/
+        duration=duration || 100;
+        let ret=()=>{
+            if(!this.monopoly.permit){
+                this.monopoly.permit=fn;
+            }
+            if(this.monopoly.permit === fn){
+                clearTimeout(this.monopoly.permitTimer);
+                this.monopoly.permitTimer=setTimeout(()=>{
+                    delete this.monopoly.permit;
+                },duration);
+                return fn.apply(this,arguments);
+            }
+        };
+        return ret;
     }
     getTxt1CursorPosition(object){
         const textarea=object;
