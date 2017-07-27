@@ -40,8 +40,13 @@ class Eidtor extends React.Component {
                         </div>
                     </div>
                     <div className={previewClass}>
-                        <div className="m-preview">
+                        <div ref="previewBox" className="m-preview">
                             <div ref="markdownBody" className="markdown-body" onScroll={this.monopoly.call(this,(evt)=>this.updateScroll(this.refs.markdownBody,this.refs.editor))} dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
+                            <div className="mod-scroll">
+                                <div ref="scrollBox" className="m-scroll">
+                                    <span></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -138,9 +143,7 @@ class Eidtor extends React.Component {
     handleChange () {
         let _this=this;
         this.setState({ content: marked(this.refs.editor.value,{renderer:renderer}) },prettyPrint);
-/*
         _this.scrollBar(_this.refs.previewBox,_this.refs.markdownBody)
-*/
     }
     chageMode(_mode){
         this.setState({mode: _mode});
@@ -346,13 +349,13 @@ class Eidtor extends React.Component {
 
 
     /*滚动条*/
-    /*scrollBar(mainBox, contentBox){
+    scrollBar(mainBox, contentBox){
         let scrollDiv = this.refs.scrollBox;
         this._resizeScorll(scrollDiv, mainBox, contentBox);
         this._tragScroll(scrollDiv, mainBox, contentBox);
         this._wheelChange(scrollDiv, mainBox, contentBox);
         this._clickScroll(scrollDiv, mainBox, contentBox);
-    }*/
+    }
     _bind(obj, type, handler) {
         let node = typeof obj == "string" ? $(obj) : obj;
         if (node.addEventListener) {
@@ -366,8 +369,9 @@ class Eidtor extends React.Component {
     _mouseWheel(obj,handler) {
         let _this=this;
         let node = typeof obj == "string" ? $(obj) : obj;
-        this._bind(node, 'mousewheel', function (event) {
-            let data = _this._getWheelData(event);
+        _this._bind(node, 'mousewheel', function (event) {
+            let data = -(_this._getWheelData(event));
+            console.log(data)
             handler(data);
             if (document.all) {
                 window.event.returnValue = false;
@@ -384,18 +388,14 @@ class Eidtor extends React.Component {
     }
     _getWheelData(event){
         let e=event||window.event;
-        return this.state.wheelData ? this.state.wheelDelta : e.detail * 40;
+        return e.wheelDelta?e.wheelDelta:e.detail*40;
     }
     //调整滚动条
     _resizeScorll(element, mainBox, contentBox) {
         let p = element.parentNode;
-        let conHeight=contentBox.scrollHeight-contentBox.scrollTop;
-      /*  console.log("clientHeight")
+        let conHeight=contentBox.clientHeight;
+        console.log("clientHeight")
         console.log(contentBox.clientHeight)
-        console.log("scrollTop")
-        console.log(contentBox.scrollTop)
-        console.log("conHeight")
-        console.log(conHeight)*/
         let _width = mainBox.clientWidth;
         let _height = mainBox.clientHeight;
         let _scrollWidth = element.offsetWidth;
@@ -433,17 +433,18 @@ class Eidtor extends React.Component {
                 element.style.top = _t + "px";
                 contentBox.style.top = -_t * (contentBox.offsetHeight / mainBox.offsetHeight) + "px";
                 _this.setState({ wheelData: _t });
+                console.log(_this.state.wheelData)
             };
             document.onmouseup = (event) => {
-                _this.onmousemove = null;
+                document.onmousemove = null;
             }
         };
-        element.onmouseover = function () {
+        /*element.onmouseover =()=> {
             this.style.background = "#444";
         };
-        element.onmouseout = function () {
+        element.onmouseout = ()=> {
             this.style.background = "#666";
-        }
+        }*/
     }
     //鼠标滚轮滚动，滚动条滚动
     _wheelChange(element, mainBox, contentBox) {
@@ -451,12 +452,15 @@ class Eidtor extends React.Component {
         let node = typeof mainBox == "string" ? $(mainBox) : mainBox;
         let flag = 0, rate = 0, wheelFlag = 0;
         if (node) {
+            console.log(111)
             this._mouseWheel(node, function (data) {
                 wheelFlag += data;
                 if (_this.state.wheelData >= 0) {
                     flag = _this.state.wheelData;
+                    console.log("flag")
+                    console.log(flag)
                     element.style.top = flag + "px";
-                    wheelFlag = _this.state.wheelData * 12;
+                    wheelFlag = flag*12;
                     _this.setState({ wheelData: -1 });
                 } else {
                     flag = wheelFlag / 12;
@@ -469,6 +473,7 @@ class Eidtor extends React.Component {
                     flag = (mainBox.clientHeight - element.offsetHeight);
                     wheelFlag = (mainBox.clientHeight - element.offsetHeight) * 12;
                 }
+                console.log(_this.state.wheelData)
                 element.style.top = flag + "px";
                 contentBox.style.top = -flag * (contentBox.offsetHeight / mainBox.offsetHeight) + "px";
             });
