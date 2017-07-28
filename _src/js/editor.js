@@ -2,7 +2,7 @@ import React from 'react';
 import marked from 'marked';
 import classNames from 'classnames';
 import config from '../../config.json';
-/*import Scroll from './scroll';*/
+import toolbar from '../../toolbar.json';
 let renderer = new marked.Renderer();
     renderer.code = (code)=>{
     return '<pre class="prettyprint linenums">' + code + '</pre>';
@@ -39,14 +39,10 @@ class Eidtor extends React.Component {
                             <textarea name="content" ref="editor" onScroll={this.monopoly.call(this,(evt)=>this.updateScroll(this.refs.editor,this.refs.markdownBody))} onChange={this.handleChange.bind(this)}></textarea>
                         </div>
                     </div>
-                    <div className={previewClass}>
+                    <div className={previewClass} id="previewBox">
                         <div ref="previewBox" className="m-preview">
                             <div ref="markdownBody" className="markdown-body" onScroll={this.monopoly.call(this,(evt)=>this.updateScroll(this.refs.markdownBody,this.refs.editor))} dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
-                            <div className="mod-scroll">
-                                <div ref="scrollBox" className="m-scroll">
-                                    <span></span>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -56,17 +52,18 @@ class Eidtor extends React.Component {
         );
     }
     toolbar(){
+
        return(
            <ul className="edit-toolbar clearfix">
-             <li><a title="加粗" onClick={()=>this.boldText()}><i className="fa fa-bold"></i></a></li>
-             <li><a title="斜体" onClick={()=>this.italicText()}><i className="fa fa-italic"></i></a></li>
-             <li><a title="链接" onClick={()=>this.linkText()}><i className="fa fa-link"></i></a></li>
-             <li><a title="引用" onClick={()=>this.quoteText()}><i className="fa fa-quote-left"></i></a></li>
-             <li><a title="代码段" onClick={()=>this.codeText()}><i className="fa fa-code"></i></a></li>
-             <li><a title="图片"  onClick={(_state)=>this.chageState({dia: !this.state.dia})}><i className="fa fa-picture-o"></i></a></li>
-             <li><a title="有序列表" onClick={()=>this.list_olText()}><i className="fa fa-list-ol"></i></a></li>
-             <li><a title="无序列表" onClick={()=>this.list_ulText()}><i className="fa fa-list-ul"></i></a></li>
-             <li><a title="标题" onClick={()=>this.headerText()}><i className="fa fa-header"></i></a></li>
+             <li><a title="加粗" ref="bold" onClick={()=>this.boldText()}><i className="fa fa-bold"></i></a></li>
+             <li><a title="斜体" ref="italic" onClick={()=>this.italicText()}><i className="fa fa-italic"></i></a></li>
+             <li><a title="链接" ref="link" onClick={()=>this.linkText()}><i className="fa fa-link"></i></a></li>
+             <li><a title="引用" ref="blockquote" onClick={()=>this.quoteText()}><i className="fa fa-quote-left"></i></a></li>
+             <li><a title="代码段" ref="code" onClick={()=>this.codeText()}><i className="fa fa-code"></i></a></li>
+             <li><a title="图片"  ref="image" onClick={(_state)=>this.chageState({dia: !this.state.dia})}><i className="fa fa-picture-o"></i></a></li>
+             <li><a title="有序列表" ref="insertorderedlist" onClick={()=>this.list_olText()}><i className="fa fa-list-ol"></i></a></li>
+             <li><a title="无序列表" ref="insertunorderedlist" onClick={()=>this.list_ulText()}><i className="fa fa-list-ul"></i></a></li>
+             <li><a title="标题" ref="title" onClick={()=>this.headerText()}><i className="fa fa-header"></i></a></li>
            </ul>
        )
     }
@@ -141,9 +138,7 @@ class Eidtor extends React.Component {
         )
     }
     handleChange () {
-        let _this=this;
         this.setState({ content: marked(this.refs.editor.value,{renderer:renderer}) },prettyPrint);
-        _this.scrollBar(_this.refs.previewBox,_this.refs.markdownBody)
     }
     chageMode(_mode){
         this.setState({mode: _mode});
@@ -257,7 +252,7 @@ class Eidtor extends React.Component {
         this.shortCutText("> 引用", 2, 4)
     }
     codeText(){
-        this.shortCutText("```\ncode block\n```", 4, 14)
+        this.shortCutText("```\ncode block\n```", 4, 14);
     }
     list_olText () {
         this.shortCutText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
@@ -342,165 +337,6 @@ class Eidtor extends React.Component {
     publish(){
         let _html='<div class="markdown-body">'+this.state.content+'</div>';
         this.formData("publishData",_html,1)
-    }
-
-
-
-
-
-    /*滚动条*/
-    scrollBar(mainBox, contentBox){
-        let scrollDiv = this.refs.scrollBox;
-        this._resizeScorll(scrollDiv, mainBox, contentBox);
-        this._tragScroll(scrollDiv, mainBox, contentBox);
-        this._wheelChange(scrollDiv, mainBox, contentBox);
-        this._clickScroll(scrollDiv, mainBox, contentBox);
-    }
-    _bind(obj, type, handler) {
-        let node = typeof obj == "string" ? $(obj) : obj;
-        if (node.addEventListener) {
-            node.addEventListener(type, handler, false);
-        } else if (node.attachEvent) {
-            node.attachEvent('on' + type, handler);
-        } else {
-            node['on' + type] = handler;
-        }
-    }
-    _mouseWheel(obj,handler) {
-        let _this=this;
-        let node = typeof obj == "string" ? $(obj) : obj;
-        _this._bind(node, 'mousewheel', function (event) {
-            let data = -(_this._getWheelData(event));
-            console.log(data)
-            handler(data);
-            if (document.all) {
-                window.event.returnValue = false;
-            } else {
-                event.preventDefault();
-            }
-        });
-        //火狐
-        this._bind(node, 'DOMMouseScroll', function (event) {
-            let data = _this._getWheelData(event);
-            handler(data);
-            event.preventDefault();
-        });
-    }
-    _getWheelData(event){
-        let e=event||window.event;
-        return e.wheelDelta?e.wheelDelta:e.detail*40;
-    }
-    //调整滚动条
-    _resizeScorll(element, mainBox, contentBox) {
-        let p = element.parentNode;
-        let conHeight=contentBox.clientHeight;
-        console.log("clientHeight")
-        console.log(contentBox.clientHeight)
-        let _width = mainBox.clientWidth;
-        let _height = mainBox.clientHeight;
-        let _scrollWidth = element.offsetWidth;
-        let _left = _width - _scrollWidth;
-        p.style.width = _scrollWidth + "px";
-        p.style.height = _height + "px";
-        p.style.left = _left + "px";
-        p.style.position = "absolute";
-        p.style.background = "#ccc";
-        contentBox.style.width = (mainBox.offsetWidth - _scrollWidth) + "px";
-        let _scrollHeight = parseInt(_height * (_height / conHeight));
-        if (_scrollHeight >= mainBox.clientHeight) {
-            element.parentNode.style.display = "none";
-        }
-        element.style.height = _scrollHeight + "px";
-    }
-    //拖动滚动条
-    _tragScroll(element, mainBox, contentBox) {
-        let _this=this;
-        let mainHeight = mainBox.clientHeight;
-        element.onmousedown = (event) => {
-            let _scrollTop = element.offsetTop;
-            let e = event || window.event;
-            let top = e.clientY;
-            document.onmousemove = (event) => {
-                let e = event || window.event;
-                let _top = e.clientY;
-                let _t = _top - top + _scrollTop;
-                if (_t > (mainHeight - element.offsetHeight)) {
-                    _t = mainHeight - element.offsetHeight;
-                }
-                if (_t <= 0) {
-                    _t = 0;
-                }
-                element.style.top = _t + "px";
-                contentBox.style.top = -_t * (contentBox.offsetHeight / mainBox.offsetHeight) + "px";
-                _this.setState({ wheelData: _t });
-                console.log(_this.state.wheelData)
-            };
-            document.onmouseup = (event) => {
-                document.onmousemove = null;
-            }
-        };
-        /*element.onmouseover =()=> {
-            this.style.background = "#444";
-        };
-        element.onmouseout = ()=> {
-            this.style.background = "#666";
-        }*/
-    }
-    //鼠标滚轮滚动，滚动条滚动
-    _wheelChange(element, mainBox, contentBox) {
-        let _this=this;
-        let node = typeof mainBox == "string" ? $(mainBox) : mainBox;
-        let flag = 0, rate = 0, wheelFlag = 0;
-        if (node) {
-            console.log(111)
-            this._mouseWheel(node, function (data) {
-                wheelFlag += data;
-                if (_this.state.wheelData >= 0) {
-                    flag = _this.state.wheelData;
-                    console.log("flag")
-                    console.log(flag)
-                    element.style.top = flag + "px";
-                    wheelFlag = flag*12;
-                    _this.setState({ wheelData: -1 });
-                } else {
-                    flag = wheelFlag / 12;
-                }
-                if (flag <= 0) {
-                    flag = 0;
-                    wheelFlag = 0;
-                }
-                if (flag >= (mainBox.offsetHeight - element.offsetHeight)) {
-                    flag = (mainBox.clientHeight - element.offsetHeight);
-                    wheelFlag = (mainBox.clientHeight - element.offsetHeight) * 12;
-                }
-                console.log(_this.state.wheelData)
-                element.style.top = flag + "px";
-                contentBox.style.top = -flag * (contentBox.offsetHeight / mainBox.offsetHeight) + "px";
-            });
-        }
-    }
-
-    _clickScroll(element, mainBox, contentBox) {
-        let p = element.parentNode;
-        let _this=this;
-        p.onclick = function (event) {
-            let e = event || window.event;
-            let t = e.target || e.srcElement;
-            let sTop = document.documentElement.scrollTop > 0 ? document.documentElement.scrollTop : document.body.scrollTop;
-            let top = mainBox.offsetTop;
-            let _top = e.clientY + sTop - top - element.offsetHeight / 2;
-            if (_top <= 0) {
-                _top = 0;
-            }
-            if (_top >= (mainBox.clientHeight - element.offsetHeight)) {
-                _top = mainBox.clientHeight - element.offsetHeight;
-            }
-            if (t != element) {
-                element.style.top = _top + "px";
-                contentBox.style.top = -_top * (contentBox.offsetHeight / mainBox.offsetHeight) + "px";
-                _this.setState({ wheelData: _top });
-            }
-        }
     }
 }
 export default Eidtor;

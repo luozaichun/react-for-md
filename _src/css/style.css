@@ -96,8 +96,8 @@ body {
     line-height:1.4em;
     width: 100%;
     overflow:hidden;
-    height: 89%;
-    margin: 20px 0;
+    height: 91%;
+    padding: 20px 0;
     position: relative;
 }
 .mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-preview{
@@ -115,23 +115,10 @@ body {
     color: #2C3E50;
     font-size: 18px;
     background-color: #f1f1f1;
-    width: 96%;
+    width: 94%;
     padding: 0 3%;
     line-height: 1.5;
-   /* position: absolute;
-    top: 0;
-    left: 0;*/
 }
-.mod-editor:after{
-    content: '';
-    height: 100%;
-    background-color: #e0e2e1;
-    position: absolute;
-    width: 2px;
-    right: -1px;
-    top: 0;
-}
-
 /*toolbar*/
 .mod-tool{
     background-color: #444;
@@ -449,6 +436,18 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
+/*滚动条*/
+::-webkit-scrollbar {
+    width: 10px;
+} /* 这是针对缺省样式 (必须的) */
+::-webkit-scrollbar-track {
+    background-color: #e7eae9;
+} /* 滚动条的滑轨背景颜色 */
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dbdf;
+} /* 滑块颜色 */
+
 /*markdown*/
 @font-face {
     font-family: octicons-link;
@@ -462,21 +461,15 @@ body {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 18px;
     word-wrap: break-word;
-    /*height: 100%;*/
-    height: auto;
+    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0 3%;
-    width: 97%;
-    position: absolute;
-    top: 0;
-    left: 0;
+    width: 94%;
 }
-
 .markdown-body .pl-c {
     color: #969896;
 }
-
 .markdown-body .pl-c1,
 .markdown-body .pl-s .pl-v {
     color: #0086b3;
@@ -1144,5 +1137,3 @@ body {
 .mod-panel.dark .markdown-body h1,.mod-panel.dark .markdown-body h2{
     border-bottom: 1px dashed #eaecef;
 }
-
-.mod-scroll,.m-scroll{ width:18px; position:absolute; top:0; background:#666; border-radius:10px;}
