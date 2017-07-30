@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import Main from './js/main';
 import './css/style.css';
 import './css/prettyprint.css';
-ReactDOM.render(
-    <Main />,
-    document.getElementById('app')
-);
-
+window.Editor=function(id,options){
+    ReactDOM.render(
+        <Main options={options}/>,
+        document.getElementById(id)
+    );
+};
