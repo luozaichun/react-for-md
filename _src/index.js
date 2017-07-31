@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Main from './js/main';
+import Editor from './js/editor';
 import './css/style.css';
 import './css/prettyprint.css';
 window.Editor=function(id,options){
     ReactDOM.render(
-        <Main options={options}/>,
+        <Editor options={options}/>,
         document.getElementById(id)
     );
 };

@@ -37,11 +37,7 @@ module.exports = {
         },{
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('style', 'css-loader?sourceMap!autoprefixer-loader?browsers=last 2 versions')
-        },
-         {
-            test: /\.json$/,
-            loader: 'json-loader'
-         }]
+        }]
     },
     /*webpack-dev-server配置*/
     /*devServer: {

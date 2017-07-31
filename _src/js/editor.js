@@ -1,11 +1,77 @@
 import React from 'react';
 import marked from 'marked';
 import classNames from 'classnames';
-import config from '../../config.json';
-import toolbar from '../../toolbar.json';
 let renderer = new marked.Renderer();
     renderer.code = (code)=>{
     return '<pre class="prettyprint linenums">' + code + '</pre>';
+};
+let defaultOption={
+    upload_route:"/upload",
+    publish_route:"/",
+    toolbars:[
+        {
+            name: "bold",
+            toolbarIcon:"fa-bold"
+        },
+        {
+            name: "italic",
+            toolbarIcon:"fa-italic"
+        },
+        {
+            name: "link",
+            toolbarIcon:"fa-link"
+        },
+        {
+            name: "blockquote",
+            toolbarIcon:"fa-quote-left"
+        },
+        {
+            name: "code",
+            toolbarIcon:"fa-code"
+        },
+        {
+            name: "image",
+            toolbarIcon:"fa-picture-o"
+        },
+        {
+            name: "insertorderedlist",
+            toolbarIcon:"fa-list-ol"
+        },
+        {
+            name: "insertunorderedlist",
+            toolbarIcon:"fa-list-ul"
+        },
+        {
+            name: "title",
+            toolbarIcon:"fa-header"
+        },
+    ],
+    modebars:[
+        {
+            name: "fullScreen",
+            modbarIcon:"fa-arrows-alt"
+        },
+        {
+            name: "theme",
+            modbarIcon:"fa-adjust"
+        },
+        {
+            name: "preview",
+            modbarIcon:"fa-eye"
+        },
+        {
+            name: "split",
+            modbarIcon:"fa-columns"
+        },
+        {
+            name: "edit",
+            modbarIcon:"fa-pencil"
+        },
+        {
+            name: "publish",
+            modbarIcon:"fa-share-square-o"
+        }
+    ]
 };
 
 class Eidtor extends React.Component {
@@ -18,12 +84,23 @@ class Eidtor extends React.Component {
             theme:false,
             dia:false,
             wheelData: -1,
-        }
+        };
+        console.log(props.options.toolbars)
+
+        this.defaultProps=Object.assign(defaultOption,props.options);
     }
     componentDidMount() {
         this.pasteImg();
+       /* console.log(this.defaultProps.publish_route)*/
     }
     render() {
+        return (
+            <div className="container">
+                {this.editor()}
+            </div>
+        )
+    }
+    editor(){
         const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'fullscreen': this.state.isFullScreen },{ 'dark': this.state.theme} ]);
         const editorClass = classNames([ 'mod-editor', { 'main-mode': this.state.mode === 'edit','hidden': this.state.mode === 'preview'} ]);
         const previewClass = classNames([ 'mod-preview',{ 'hidden': this.state.mode === 'edit','main-mode': this.state.mode === 'preview'} ]);
@@ -314,9 +391,9 @@ class Eidtor extends React.Component {
         oData.append(name, e);
         let oReq = new XMLHttpRequest();
         if(type==0){
-            oReq.open("POST", config.upload_route, true);
+            oReq.open("POST", this.defaultProps.upload_route, true);
         }else{
-            oReq.open("POST", config.publish_route, true);
+            oReq.open("POST", this.defaultProps.publish_route, true);
         }
         oReq.send(oData);
         oReq.onreadystatechange = () => {//在这里指定上传成功的回调函数，接受返回值
@@ -339,4 +416,5 @@ class Eidtor extends React.Component {
         this.formData("publishData",_html,1)
     }
 }
+
 export default Eidtor;

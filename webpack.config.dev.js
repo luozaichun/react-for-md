@@ -29,11 +29,7 @@ module.exports = {
             test:/\.css$/,
             exclude: /node_modules/,
             loader: 'style-loader!css-loader'
-        },
-         {
-             test: /\.json$/,
-             loader: 'json-loader'
-         }]
+        }]
     }
 };
 
