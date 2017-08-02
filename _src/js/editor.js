@@ -8,6 +8,34 @@ let renderer = new marked.Renderer();
 let defaultOption={
     upload_route:"/upload",
     publish_route:"/",
+    modebars:[
+        {
+            name: "fullScreen",
+            modbarIcon:"fa-arrows-alt"
+        },
+        {
+            name: "theme",
+            modbarIcon:"fa-adjust"
+        },
+        {
+            name: "preview",
+            modbarIcon:"fa-eye"
+        },
+        {
+            name: "split",
+            modbarIcon:"fa-columns"
+        },
+        {
+            name: "edit",
+            modbarIcon:"fa-pencil"
+        },
+        {
+            name: "publish",
+            modbarIcon:"fa-share-square-o"
+        }
+    ]
+};
+let defaultToolbar={
     toolbars:[
         {
             name: "bold",
@@ -45,35 +73,8 @@ let defaultOption={
             name: "title",
             toolbarIcon:"fa-header"
         },
-    ],
-    modebars:[
-        {
-            name: "fullScreen",
-            modbarIcon:"fa-arrows-alt"
-        },
-        {
-            name: "theme",
-            modbarIcon:"fa-adjust"
-        },
-        {
-            name: "preview",
-            modbarIcon:"fa-eye"
-        },
-        {
-            name: "split",
-            modbarIcon:"fa-columns"
-        },
-        {
-            name: "edit",
-            modbarIcon:"fa-pencil"
-        },
-        {
-            name: "publish",
-            modbarIcon:"fa-share-square-o"
-        }
     ]
 };
-
 class Eidtor extends React.Component {
     constructor(props){
         super(props);
@@ -85,13 +86,15 @@ class Eidtor extends React.Component {
             dia:false,
             wheelData: -1,
         };
-        console.log(props.options.toolbars)
-
-        this.defaultProps=Object.assign(defaultOption,props.options);
+        if(!props.options.toolbars){
+            this.defaultProps=Object.assign(defaultOption,defaultToolbar,props.options);
+        }else{
+            this.defaultProps=Object.assign(defaultOption,props.options);
+        }
+        console.log(this.defaultProps)
     }
     componentDidMount() {
         this.pasteImg();
-       /* console.log(this.defaultProps.publish_route)*/
     }
     render() {
         return (
@@ -129,20 +132,60 @@ class Eidtor extends React.Component {
         );
     }
     toolbar(){
+        return (
+            <ul className="edit-toolbar clearfix">
+            {
+                this.defaultProps.toolbars.map(function (item) {
+                    let iconClass=classNames('fa', item.toolbarIcon);
+                    let toolName=item.name;
+                    let toolTitle,toolFn;
+                    switch (toolName){
+                        case "bold":
+                            toolTitle="加粗";
+                            toolFn=this.boldText;
+                            break;
+                        case "italic":
+                            toolTitle="斜体";
+                            toolFn=this.italicText;
+                            break;
+                        case "link":
+                            toolTitle="链接";
+                            toolFn=this.linkText;
+                            break;
+                        case "blockquote":
+                            toolTitle="引用";
+                            toolFn=this.quoteText;
+                            break;
+                        case "code":
+                            toolTitle="代码段";
+                            toolFn=this.codeText;
+                            break;
+                        case "image":
+                            toolTitle="图片";
+                            toolFn=(_state)=>this.chageState({dia: !this.state.dia});
+                            break;
+                        case "insertorderedlist":
+                            toolTitle="有序列表";
+                            toolFn=this.list_olText;
+                            break;
+                        case "insertunorderedlist":
+                            toolTitle="无序列表";
+                            toolFn=this.list_ulText;
+                            break;
+                        case "title":
+                            toolTitle="标题";
+                            toolFn=this.headerText;
+                            break;
+                        default:
+                            break;
+                    }
+                    console.log(toolFn)
+                    return (<li><a key={item.name} title={toolTitle} ref={item.name} onClick={()=>toolFn()}><i className={iconClass}></i></a></li>)
+                })
+            }
+            </ul>
+        );
 
-       return(
-           <ul className="edit-toolbar clearfix">
-             <li><a title="加粗" ref="bold" onClick={()=>this.boldText()}><i className="fa fa-bold"></i></a></li>
-             <li><a title="斜体" ref="italic" onClick={()=>this.italicText()}><i className="fa fa-italic"></i></a></li>
-             <li><a title="链接" ref="link" onClick={()=>this.linkText()}><i className="fa fa-link"></i></a></li>
-             <li><a title="引用" ref="blockquote" onClick={()=>this.quoteText()}><i className="fa fa-quote-left"></i></a></li>
-             <li><a title="代码段" ref="code" onClick={()=>this.codeText()}><i className="fa fa-code"></i></a></li>
-             <li><a title="图片"  ref="image" onClick={(_state)=>this.chageState({dia: !this.state.dia})}><i className="fa fa-picture-o"></i></a></li>
-             <li><a title="有序列表" ref="insertorderedlist" onClick={()=>this.list_olText()}><i className="fa fa-list-ol"></i></a></li>
-             <li><a title="无序列表" ref="insertunorderedlist" onClick={()=>this.list_ulText()}><i className="fa fa-list-ul"></i></a></li>
-             <li><a title="标题" ref="title" onClick={()=>this.headerText()}><i className="fa fa-header"></i></a></li>
-           </ul>
-       )
     }
     modebar(){
         const actCheck=(_mode)=>classNames({'act': this.state.mode=== _mode});

@@ -63,15 +63,15 @@ body {
 .mod-panel{
     height: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 .mod-panel .m-content{
     overflow: hidden;
-    height: 97%;
+    display: flex;
+    flex: 1;
 }
 .mod-editor,.mod-preview{
-    float: left;
-    overflow-y: auto;
-    overflow-x: hidden;
     width: 50%;
     height: 100%;
     background-color: #f1f1f1;
@@ -96,13 +96,13 @@ body {
     line-height:1.4em;
     width: 100%;
     overflow:hidden;
-    height: 91%;
-    padding: 20px 0;
+    height: 94%;
+    padding: 3% 0;
     position: relative;
 }
 .mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-preview{
-    width: 850px;
-    margin: 0 auto;
+    height: 94%;
+    padding: 2% 0;
 }
 .mod-preview .m-preview{
     color:#2C3E50;
@@ -122,9 +122,8 @@ body {
 /*toolbar*/
 .mod-tool{
     background-color: #444;
-    padding: 15px 20px;
+    padding: 15px 20px 5px 20px;
     box-shadow: 0 1px 1px rgba(0,0,0,.2);
-    height: 3%;
 }
 .edit-toolbar,.preview-toolbar{
     float: left;
@@ -137,8 +136,9 @@ body {
  }
 .edit-toolbar li{
     float: left;
-    margin-left: 15px;
-    line-height: 26px;
+    margin-left:15px;
+    padding-bottom: 10px;
+    line-height: 20px;
 }
 .preview-toolbar li{
     float: right;
