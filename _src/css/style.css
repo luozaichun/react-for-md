@@ -84,7 +84,7 @@ body {
     width: 100%;
 }
 .mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-preview{
-    width: 850px;
+    width: 65%;
     margin: 0 auto;
 }
 .mod-preview.hidden,.mod-editor.hidden{
@@ -101,7 +101,7 @@ body {
     position: relative;
 }
 .mod-editor.main-mode .m-editor,.mod-preview.main-mode .m-preview{
-    height: 94%;
+    height: 92%;
     padding: 2% 0;
 }
 .mod-preview .m-preview{
@@ -146,9 +146,7 @@ body {
     line-height: 21px;
     cursor: pointer;
 }
-.edit-toolbar li:nth-child(3),.edit-toolbar li:nth-child(7){
-    margin-left: 35px;
-}
+
 .preview-toolbar li:nth-child(3){
     margin-right:35px;
 }

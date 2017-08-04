@@ -39,38 +39,47 @@ let defaultToolbar={
     toolbars:[
         {
             name: "bold",
+            title:"加粗",
             toolbarIcon:"fa-bold"
         },
         {
             name: "italic",
+            title:"斜体",
             toolbarIcon:"fa-italic"
         },
         {
             name: "link",
+            title:"链接",
             toolbarIcon:"fa-link"
         },
         {
             name: "blockquote",
+            title:"引用",
             toolbarIcon:"fa-quote-left"
         },
         {
             name: "code",
+            title:"代码段",
             toolbarIcon:"fa-code"
         },
         {
             name: "image",
+            title:"图片",
             toolbarIcon:"fa-picture-o"
         },
         {
             name: "insertorderedlist",
+            title:"有序列表",
             toolbarIcon:"fa-list-ol"
         },
         {
             name: "insertunorderedlist",
+            title:"无序列表",
             toolbarIcon:"fa-list-ul"
         },
         {
             name: "title",
+            title:"标题",
             toolbarIcon:"fa-header"
         },
     ]
@@ -85,6 +94,7 @@ class Eidtor extends React.Component {
             theme:false,
             dia:false,
             wheelData: -1,
+            isTOC:false
         };
         if(!props.options.toolbars){
             this.defaultProps=Object.assign(defaultOption,defaultToolbar,props.options);
@@ -137,56 +147,44 @@ class Eidtor extends React.Component {
                 this.defaultProps.toolbars.map((item,index)=> {
                     let iconClass=classNames('fa', item.toolbarIcon);
                     let toolName=item.name;
-                    let toolTitle,toolFn;
+                    let toolFn;
                     switch (toolName){
                         case "bold":
-                            toolTitle="加粗";
                             toolFn=()=>this.boldText();
                             break;
                         case "italic":
-                            toolTitle="斜体";
                             toolFn=()=>this.italicText();
                             break;
                         case "link":
-                            toolTitle="链接";
                             toolFn=()=>this.linkText();
                             break;
                         case "blockquote":
-                            toolTitle="引用";
                             toolFn=()=>this.quoteText();
                             break;
                         case "code":
-                            toolTitle="代码段";
                             toolFn=()=>this.codeText();
                             break;
                         case "image":
-                            toolTitle="图片";
                             toolFn=(_state)=>this.chageState({dia: !this.state.dia});
                             break;
                         case "insertorderedlist":
-                            toolTitle="有序列表";
                             toolFn=()=>this.list_olText();
                             break;
                         case "insertunorderedlist":
-                            toolTitle="无序列表";
                             toolFn=()=>this.list_ulText();
                             break;
                         case "title":
-                            toolTitle="标题";
                             toolFn=()=>this.headerText();
                             break;
                         default:
                             break;
                     }
                     if(item.toolbarHandlers){
-                        console.log(item.toolbarHandlers)
-                        toolTitle="测试";
-                        toolFn=()=>item.toolbarHandlers;
+                        toolFn=()=>item.toolbarHandlers(this);
                     }
-                    console.log(toolFn)
                     return (
                         <li key={index}>
-                            <a title={toolTitle} ref={item.name} onClick={toolFn}>
+                            <a title={item.title} ref={item.name} onClick={toolFn}>
                                 <i className={iconClass}></i>
                             </a>
                         </li>
@@ -267,8 +265,21 @@ class Eidtor extends React.Component {
             </div>
         )
     }
+    tocBox(){
+        return(
+            <div className="BlogAnchor">
+                <p>
+                    <b id="AnchorContentToggle" title="收起" style="cursor:pointer;">目录[-]</b>
+                </p>
+                <div className="AnchorContent" id="AnchorContent"> </div>
+            </div>
+        )
+    }
     handleChange () {
-        this.setState({ content: marked(this.refs.editor.value,{renderer:renderer}) },prettyPrint);
+        this.setState({ content: marked(this.refs.editor.value,{renderer:renderer})},prettyPrint);
+         if(/\n\[TOC\]\n/.test(this.refs.editor.value)){
+            this.chageState({isTOC: true});
+        }
     }
     chageMode(_mode){
         this.setState({mode: _mode});
