@@ -39,38 +39,47 @@ let defaultToolbar={
     toolbars:[
         {
             name: "bold",
+            title:"加粗",
             toolbarIcon:"fa-bold"
         },
         {
             name: "italic",
+            title:"斜体",
             toolbarIcon:"fa-italic"
         },
         {
             name: "link",
+            title:"链接",
             toolbarIcon:"fa-link"
         },
         {
             name: "blockquote",
+            title:"引用",
             toolbarIcon:"fa-quote-left"
         },
         {
             name: "code",
+            title:"代码段",
             toolbarIcon:"fa-code"
         },
         {
             name: "image",
+            title:"图片",
             toolbarIcon:"fa-picture-o"
         },
         {
             name: "insertorderedlist",
+            title:"有序列表",
             toolbarIcon:"fa-list-ol"
         },
         {
             name: "insertunorderedlist",
+            title:"无序列表",
             toolbarIcon:"fa-list-ul"
         },
         {
             name: "title",
+            title:"标题",
             toolbarIcon:"fa-header"
         },
     ]
@@ -85,13 +94,13 @@ class Eidtor extends React.Component {
             theme:false,
             dia:false,
             wheelData: -1,
+            isTOC:false
         };
         if(!props.options.toolbars){
             this.defaultProps=Object.assign(defaultOption,defaultToolbar,props.options);
         }else{
             this.defaultProps=Object.assign(defaultOption,props.options);
         }
-        console.log(this.defaultProps)
     }
     componentDidMount() {
         this.pasteImg();
@@ -135,52 +144,51 @@ class Eidtor extends React.Component {
         return (
             <ul className="edit-toolbar clearfix">
             {
-                this.defaultProps.toolbars.map(item=> {
+                this.defaultProps.toolbars.map((item,index)=> {
                     let iconClass=classNames('fa', item.toolbarIcon);
                     let toolName=item.name;
-                    let toolTitle,toolFn;
+                    let toolFn;
                     switch (toolName){
                         case "bold":
-                            toolTitle="加粗";
-                            toolFn=this.boldText;
+                            toolFn=()=>this.boldText();
                             break;
                         case "italic":
-                            toolTitle="斜体";
-                            toolFn=this.italicText;
+                            toolFn=()=>this.italicText();
                             break;
                         case "link":
-                            toolTitle="链接";
-                            toolFn=this.linkText;
+                            toolFn=()=>this.linkText();
                             break;
                         case "blockquote":
-                            toolTitle="引用";
-                            toolFn=this.quoteText;
+                            toolFn=()=>this.quoteText();
                             break;
                         case "code":
-                            toolTitle="代码段";
-                            toolFn=this.codeText;
+                            toolFn=()=>this.codeText();
                             break;
                         case "image":
-                            toolTitle="图片";
                             toolFn=(_state)=>this.chageState({dia: !this.state.dia});
                             break;
                         case "insertorderedlist":
-                            toolTitle="有序列表";
-                            toolFn=this.list_olText;
+                            toolFn=()=>this.list_olText();
                             break;
                         case "insertunorderedlist":
-                            toolTitle="无序列表";
-                            toolFn=this.list_ulText;
+                            toolFn=()=>this.list_ulText();
                             break;
                         case "title":
-                            toolTitle="标题";
-                            toolFn=this.headerText;
+                            toolFn=()=>this.headerText();
                             break;
                         default:
                             break;
                     }
-                    console.log(toolFn)
-                    return (<li><a key={item.name} title={toolTitle} ref={item.name} onClick={()=>toolFn(this)}><i className={iconClass}></i></a></li>)
+                    if(item.toolbarHandlers){
+                        toolFn=()=>item.toolbarHandlers(this);
+                    }
+                    return (
+                        <li key={index}>
+                            <a title={item.title} ref={item.name} onClick={toolFn}>
+                                <i className={iconClass}></i>
+                            </a>
+                        </li>
+                    )
                 })
             }
             </ul>
@@ -257,8 +265,21 @@ class Eidtor extends React.Component {
             </div>
         )
     }
+    tocBox(){
+        return(
+            <div className="BlogAnchor">
+                <p>
+                    <b id="AnchorContentToggle" title="收起" style="cursor:pointer;">目录[-]</b>
+                </p>
+                <div className="AnchorContent" id="AnchorContent"> </div>
+            </div>
+        )
+    }
     handleChange () {
-        this.setState({ content: marked(this.refs.editor.value,{renderer:renderer}) },prettyPrint);
+        this.setState({ content: marked(this.refs.editor.value,{renderer:renderer})},prettyPrint);
+         if(/\n\[TOC\]\n/.test(this.refs.editor.value)){
+            this.chageState({isTOC: true});
+        }
     }
     chageMode(_mode){
         this.setState({mode: _mode});
@@ -304,7 +325,6 @@ class Eidtor extends React.Component {
         }
     }
     updateScroll(src,dest){
-        console.log(3);
         let scrollRange=src.scrollHeight-src.clientHeight,
         p=src.scrollTop/scrollRange;
         dest.scrollTop=p*(dest.scrollHeight-dest.clientHeight);
@@ -341,6 +361,11 @@ class Eidtor extends React.Component {
         }
         return cursurPosition;/*返回当前索引*/
     }
+    /**
+     * @param {String}      string         markdown命令
+     * @param {String}      start          修改文字内容起始位置
+     * @param {String}      end            修改文字内容结束位置
+     */
     shortCutText(string,start,end){
         const obj=this.refs.editor;
         let origin=obj.value;
