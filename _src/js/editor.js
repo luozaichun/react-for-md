@@ -135,7 +135,7 @@ class Eidtor extends React.Component {
         return (
             <ul className="edit-toolbar clearfix">
             {
-                this.defaultProps.toolbars.map(function (item) {
+                this.defaultProps.toolbars.map(item=> {
                     let iconClass=classNames('fa', item.toolbarIcon);
                     let toolName=item.name;
                     let toolTitle,toolFn;
@@ -180,7 +180,7 @@ class Eidtor extends React.Component {
                             break;
                     }
                     console.log(toolFn)
-                    return (<li><a key={item.name} title={toolTitle} ref={item.name} onClick={()=>toolFn()}><i className={iconClass}></i></a></li>)
+                    return (<li><a key={item.name} title={toolTitle} ref={item.name} onClick={()=>toolFn(this)}><i className={iconClass}></i></a></li>)
                 })
             }
             </ul>
