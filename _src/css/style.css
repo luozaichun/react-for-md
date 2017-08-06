@@ -136,7 +136,7 @@ body {
  }
 .edit-toolbar li{
     float: left;
-    margin-left:15px;
+    margin-right:15px;
     padding-bottom: 10px;
     line-height: 20px;
 }
@@ -456,14 +456,15 @@ body {
     -webkit-text-size-adjust: 100%;
     line-height: 1.5;
     color: #24292e;
-    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 18px;
+    font-family: "Microsoft YaHei", Helvetica, "Meiryo UI", "Malgun Gothic", "Segoe UI", "Trebuchet MS", "Monaco", monospace, Tahoma, STXihei, "华文细黑", STHeiti, "Helvetica Neue", "Droid Sans", "wenquanyi micro hei", FreeSans, Arimo, Arial, SimSun, "宋体", Heiti, "黑体", sans-serif;
+    font-size: 16px;
     word-wrap: break-word;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0 3%;
     width: 94%;
+
 }
 .markdown-body .pl-c {
     color: #969896;
@@ -933,30 +934,15 @@ body {
 
 .markdown-body h1 {
     padding-bottom: 0.3em;
-    font-size: 2em;
     border-bottom: 1px solid #eaecef;
 }
 
 .markdown-body h2 {
     padding-bottom: 0.3em;
-    font-size: 1.5em;
     border-bottom: 1px solid #eaecef;
 }
 
-.markdown-body h3 {
-    font-size: 1.25em;
-}
-
-.markdown-body h4 {
-    font-size: 1em;
-}
-
-.markdown-body h5 {
-    font-size: 0.875em;
-}
-
 .markdown-body h6 {
-    font-size: 0.85em;
     color: #6a737d;
 }
 .markdown-body ul,
@@ -972,7 +958,7 @@ body {
 }
 
 .markdown-body li>p {
-    margin-top: 16px;
+    margin-top: 14px;
 }
 
 .markdown-body li+li {
@@ -1134,4 +1120,16 @@ body {
 }
 .mod-panel.dark .markdown-body h1,.mod-panel.dark .markdown-body h2{
     border-bottom: 1px dashed #eaecef;
+}
+/*toc*/
+.toc ul{
+    margin-left: 0;
+    padding-left: 2em;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.6;
+    word-wrap: break-word;
+}
+.toc .toc-tree{
+    list-style: none;
 }
