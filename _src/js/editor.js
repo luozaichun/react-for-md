@@ -1,5 +1,5 @@
 import React from 'react';
-import marked from 'marked';
+import marked from 'md-plus';
 import classNames from 'classnames';
 let renderer = new marked.Renderer();
     renderer.code = (code)=>{
