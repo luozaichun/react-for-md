@@ -2,12 +2,11 @@ let fs = require('fs');
 let path = require('path');
 let express = require('express');
 let formidable = require('formidable');
-let config = require('./config.json');
 let app = express();
 app.use(express.static(path.join(__dirname, '/')));
 let uploadFile = (req, success, error) => {
     let form = new formidable.IncomingForm(); // 创建上传表单
-    form.uploadDir = config.upload_path; // 设置上传目录
+    form.uploadDir = "./uploadTemp"; // 设置上传目录
     form.keepExtensions = true; // 保留后缀
     form.maxFieldsSize = 3 * 1024 * 1024; // 文件大小
 
@@ -49,7 +48,7 @@ app.get('/', (req, res, next) => {
     res.send(index);
 });
 // 上传
-app.post(config.upload_route, (req, res, next) => {
+app.post("/upload", (req, res, next) => {
     uploadFile(req, (path) => {
             res.json({
                 fileUrl: path
@@ -59,7 +58,8 @@ app.post(config.upload_route, (req, res, next) => {
             res.json(err);
         });
 });
-app.post(config.publish_route, (req, res, next) => {
+/*发布*/
+app.post("/", (req, res, next) => {
     let data =new formidable.IncomingForm();
     data.parse(req,(err,fields,files)=>{
         if(err) return err;

@@ -5,12 +5,11 @@ let renderer = new marked.Renderer();
 renderer.code = (code)=>{
     return '<pre class="prettyprint linenums">' + code + '</pre>';
 };
-
-
 let defaultOption={
-    imageUploadURL:"/uploadTemp",
     upload_route:"/upload",
     publish_route:"/",
+    width: "100%",
+    height: "100%",
     modebars:[
         {
             name: "fullScreen",
@@ -36,7 +35,7 @@ let defaultOption={
             name: "publish",
             modbarIcon:"fa-share-square-o"
         }
-    ]
+    ],
 };
 let defaultToolbar={
     toolbars:[
@@ -118,7 +117,7 @@ class Eidtor extends React.Component {
         this.state = {
             panelClass: 'mod-panel',
             mode: 'split',
-            isFullScreen: false,
+            isFullScreen: true,
             theme:false,
             dia:false,
             wheelData: -1
@@ -131,16 +130,18 @@ class Eidtor extends React.Component {
     }
     componentDidMount() {
         this.pasteImg();
+        this.customStyle();
     }
     render() {
+        const fullScreen=classNames([ 'md-container', { 'fullscreen': this.state.isFullScreen}]);
         return (
-            <div className="container">
+            <div ref="container" className={fullScreen}>
                 {this.editor()}
             </div>
         )
     }
     editor(){
-        const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'fullscreen': this.state.isFullScreen },{ 'dark': this.state.theme} ]);
+        const panelClass=classNames([ 'mod-panel', 'clearfix',{ 'dark': this.state.theme} ]);
         const editorClass = classNames([ 'mod-editor', { 'main-mode': this.state.mode === 'edit','hidden': this.state.mode === 'preview'} ]);
         const previewClass = classNames([ 'mod-preview',{ 'hidden': this.state.mode === 'edit','main-mode': this.state.mode === 'preview'} ]);
         return (
@@ -309,6 +310,15 @@ class Eidtor extends React.Component {
             </div>
         )
     }
+    customStyle(){
+        if(this.defaultProps.width!="100%"){
+            this.setState({ isFullScreen: false});
+        }
+        this.refs.container.style.width=(typeof this.defaultProps.width  === "number") ? this.defaultProps.width + "px"  : this.defaultProps.width;
+        this.refs.container.style.height=(typeof this.defaultProps.height  === "number") ? this.defaultProps.height + "px"  : this.defaultProps.height;
+        this.refs.container.style.top=(typeof this.defaultProps.top  === "number") ? this.defaultProps.top + "px"  : this.defaultProps.top;
+        this.refs.container.style.left=(typeof this.defaultProps.left  === "number") ? this.defaultProps.left + "px"  : this.defaultProps.left;
+    }
     handleChange () {
         this.setState({ content: marked(this.refs.editor.value,{renderer:renderer})},prettyPrint);
     }
@@ -319,41 +329,7 @@ class Eidtor extends React.Component {
         this.setState(_state);
     }
     tooggleFullScreen(){
-        if(this.state.isFullScreen===true){
-            this.setState({isFullScreen: false});
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            }
-            else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
-            else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            }
-            else if (document.webkitCancelFullScreen) {
-                document.webkitCancelFullScreen();
-            }
-        }
-        else{
-            this.setState({isFullScreen: true});
-            let docElm = document.documentElement;
-            /*W3C*/
-            if (docElm.requestFullscreen) {
-                docElm.requestFullscreen();
-            }
-            /*FireFox*/
-            else if (docElm.mozRequestFullScreen) {
-                docElm.mozRequestFullScreen();
-            }
-            /*Chrome*/
-            else if (docElm.webkitRequestFullScreen) {
-                docElm.webkitRequestFullScreen();
-            }
-            /*IE11*/
-            else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
-        }
+        this.setState({ isFullScreen: !this.state.isFullScreen });
     }
     /*更新滚动位置*/
     updateScroll(src,dest){

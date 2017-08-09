@@ -5,20 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>react-markdown</title>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-<!--
+    <link href="/dist/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/dist/css/react-markdown.min.css" rel="stylesheet">
--->
 
 </head>
 <body>
     <div id="app"></div>
-    <!--<script src="/node_modules/react/dist/react.js"></script>
-    <script src="/node_modules/react-dom/dist/react-dom.js"></script>-->
-    <script src="/dist/react-markdown.js"></script>
-   <!-- <script src="/dist/js/react-markdown.min.js"></script>-->
+    <script src="/node_modules/react/dist/react.js"></script>
+    <script src="/node_modules/react-dom/dist/react-dom.js"></script>
+    <!-- <script src="/dist/react-markdown.js"></script>-->
+    <script src="/dist/js/react-markdown.min.js"></script>
     <script>
        var editor=new Editor('app',{
+           upload_route:"/upload",
+           publish_route:"/",
+           width: "100%",
+           height: "100%",
            toolbars:[
                {
                    name: "image",
@@ -39,31 +41,6 @@
                    name: "H1",
                    title:"H1",
                    toolbarText:"H1"
-               },
-               {
-                   name: "H2",
-                   title:"H2",
-                   toolbarText:"H2"
-               },
-               {
-                   name: "H3",
-                   title:"H3",
-                   toolbarText:"H3"
-               },
-               {
-                   name: "H4",
-                   title:"H4",
-                   toolbarText:"H4"
-               },
-               {
-                   name: "H5",
-                   title:"H5",
-                   toolbarText:"H5"
-               },
-               {
-                   name: "H6",
-                   title:"H6",
-                   toolbarText:"H6"
                },
                {
                    name: "text",
