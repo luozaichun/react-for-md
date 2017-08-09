@@ -1,5 +1,0 @@
-{
-  "upload_path":"./uploadTemp",
-  "upload_route":"/upload",
-  "publish_route":"/"
-}

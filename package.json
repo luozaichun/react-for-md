@@ -1,34 +1,39 @@
 {
-  "name": "react_markdown",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "react-for-md",
+  "version": "0.1.1",
+  "description": "A configurable markdown editor (component), based on React & Marked.",
+  "author": "luozaichun",
+  "repository": "https://github.com/luozaichun/react_markdown.git",
+  "homepage": "https://github.com/luozaichun/react_markdown",
+  "license": "MIT",
+  "keywords": ["markdown", "markup", "react","configurable"],
+  "tags": ["markdown", "markup", "react","configurable"],
+  "main": "./dist/js/react-markdown.min.js",
+  "bin": "./bin/www",
   "scripts": {
     "start": "node hot_server",
     "build": "webpack --config webpack.config.prod.js --progress --colors -p",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node bin/www"
   },
+  "style": "dist/css/react-markdown.min.css",
+  "font-awesome":"dist/font-awesome-4.7.0/css/font-awesome.min.css",
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
-    "body-parser": "^1.17.2",
     "classnames": "^2.2.5",
     "css-loader": "^0.23.1",
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^0.8.2",
     "formidable": "^1.1.1",
     "fs": "^0.0.1-security",
-    "md-plus": "^0.3.9",
+    "md-plus": "^0.4.2",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.15.0",
     "webpack-dev-server": "^1.14.1"
-  },
-  "author": "luozaichun",
-  "license": "ISC",
-  "dependencies": {}
+  }
 }
