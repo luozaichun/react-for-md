@@ -2,10 +2,13 @@ import React from 'react';
 import marked from 'md-plus';
 import classNames from 'classnames';
 let renderer = new marked.Renderer();
-    renderer.code = (code)=>{
+renderer.code = (code)=>{
     return '<pre class="prettyprint linenums">' + code + '</pre>';
 };
+
+
 let defaultOption={
+    imageUploadURL:"/uploadTemp",
     upload_route:"/upload",
     publish_route:"/",
     modebars:[
@@ -78,9 +81,34 @@ let defaultToolbar={
             toolbarIcon:"fa-list-ul"
         },
         {
-            name: "title",
-            title:"标题",
-            toolbarIcon:"fa-header"
+            name: "H1",
+            title:"H1",
+            toolbarText:"H1"
+        },
+        {
+            name: "H2",
+            title:"H2",
+            toolbarText:"H2"
+        },
+        {
+            name: "H3",
+            title:"H3",
+            toolbarText:"H3"
+        },
+        {
+            name: "H4",
+            title:"H4",
+            toolbarText:"H4"
+        },
+        {
+            name: "H5",
+            title:"H5",
+            toolbarText:"H5"
+        },
+        {
+            name: "H6",
+            title:"H6",
+            toolbarText:"H6"
         },
     ]
 };
@@ -93,8 +121,7 @@ class Eidtor extends React.Component {
             isFullScreen: false,
             theme:false,
             dia:false,
-            wheelData: -1,
-            isTOC:false
+            wheelData: -1
         };
         if(!props.options.toolbars){
             this.defaultProps=Object.assign(defaultOption,defaultToolbar,props.options);
@@ -145,9 +172,11 @@ class Eidtor extends React.Component {
             <ul className="edit-toolbar clearfix">
             {
                 this.defaultProps.toolbars.map((item,index)=> {
-                    let iconClass=classNames('fa', item.toolbarIcon);
+                    let toolFn,toolText='',toolIcon='';
+                    if(item.toolbarIcon) toolIcon=item.toolbarIcon;
+                    if(item.toolbarText) toolText=item.toolbarText;
+                    let iconClass=classNames('fa', toolIcon);
                     let toolName=item.name;
-                    let toolFn;
                     switch (toolName){
                         case "bold":
                             toolFn=()=>this.boldText();
@@ -173,8 +202,23 @@ class Eidtor extends React.Component {
                         case "insertunorderedlist":
                             toolFn=()=>this.list_ulText();
                             break;
-                        case "title":
-                            toolFn=()=>this.headerText();
+                        case "H1":
+                            toolFn=()=>this.h1Text();
+                            break;
+                        case "H2":
+                            toolFn=()=>this.h2Text();
+                            break;
+                        case "H3":
+                            toolFn=()=>this.h3Text();
+                            break;
+                        case "H4":
+                            toolFn=()=>this.h4Text();
+                            break;
+                        case "H5":
+                            toolFn=()=>this.h5Text();
+                            break;
+                        case "H6":
+                            toolFn=()=>this.h6Text();
                             break;
                         default:
                             break;
@@ -185,7 +229,7 @@ class Eidtor extends React.Component {
                     return (
                         <li key={index}>
                             <a title={item.title} ref={item.name} onClick={toolFn}>
-                                <i className={iconClass}></i>
+                                <i className={iconClass}>{toolText}</i>
                             </a>
                         </li>
                     )
@@ -265,21 +309,8 @@ class Eidtor extends React.Component {
             </div>
         )
     }
-    tocBox(){
-        return(
-            <div className="BlogAnchor">
-                <p>
-                    <b id="AnchorContentToggle" title="收起" style="cursor:pointer;">目录[-]</b>
-                </p>
-                <div className="AnchorContent" id="AnchorContent"> </div>
-            </div>
-        )
-    }
     handleChange () {
         this.setState({ content: marked(this.refs.editor.value,{renderer:renderer})},prettyPrint);
-         if(/\n\[TOC\]\n/.test(this.refs.editor.value)){
-            this.chageState({isTOC: true});
-        }
     }
     chageMode(_mode){
         this.setState({mode: _mode});
@@ -324,12 +355,14 @@ class Eidtor extends React.Component {
             }
         }
     }
+    /*更新滚动位置*/
     updateScroll(src,dest){
         let scrollRange=src.scrollHeight-src.clientHeight,
         p=src.scrollTop/scrollRange;
         dest.scrollTop=p*(dest.scrollHeight-dest.clientHeight);
     }
-    monopoly(fn,duration){  /*函数节流*/
+    /*同步滚动函数节流*/
+    monopoly(fn,duration){
         duration=duration || 100;
         let ret=()=>{
             if(!this.monopoly.permit){
@@ -345,6 +378,7 @@ class Eidtor extends React.Component {
         };
         return ret;
     }
+    /*光标索引*/
     getTxt1CursorPosition(object){
         const textarea=object;
         let cursurPosition=0;
@@ -352,7 +386,7 @@ class Eidtor extends React.Component {
             cursurPosition= textarea.selectionStart;
         }else{/*IE*/
             try{
-                var range = document.selection.createRange();
+                let range = document.selection.createRange();
                 range.moveStart("character",-textarea.value.length);
                 cursurPosition=range.text.length;
             }catch(e){
@@ -361,7 +395,7 @@ class Eidtor extends React.Component {
         }
         return cursurPosition;/*返回当前索引*/
     }
-    /**
+    /**选中
      * @param {String}      string         markdown命令
      * @param {String}      start          修改文字内容起始位置
      * @param {String}      end            修改文字内容结束位置
@@ -405,16 +439,32 @@ class Eidtor extends React.Component {
     list_ulText () {
         this.shortCutText("- 无序列表项0\n- 无序列表项1", 2, 8)
     }
-    headerText () {
+    h1Text () {
+        this.shortCutText("# 标题", 2, 4)
+    }
+    h2Text () {
         this.shortCutText("## 标题", 3, 5)
     }
-    /*上传图片*/
+    h3Text () {
+        this.shortCutText("### 标题", 4, 6)
+    }
+    h4Text () {
+        this.shortCutText("#### 标题", 5, 7)
+    }
+    h5Text () {
+        this.shortCutText("##### 标题", 6, 8)
+    }
+    h6Text () {
+        this.shortCutText("###### 标题", 7, 9)
+    }
+    /*input输入*/
     inputLink(){
         let file=this.refs.uploadPic.value;
         let filename=file.replace(/^.+?\\([^\\]+?)(\.[^\.\\]*?)?$/gi,"$1");
         let FileExt=file.replace(/.+\./,"");
         this.refs.picLink.value=filename+'.'+FileExt;
     }
+    /*上传图片*/
     pictureOption () {
         let val=this.refs.picLink.value;
         let _link;
@@ -428,6 +478,7 @@ class Eidtor extends React.Component {
         this.refs.picLink.value="";
         this.chageState({dia: !this.state.dia});
     }
+    /*粘贴上传图片*/
     pasteImg() {
         let _this=this;
         this.refs.editorBox.addEventListener('paste', function(e) {

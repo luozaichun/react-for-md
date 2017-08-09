@@ -19,6 +19,61 @@
    <!-- <script src="/dist/js/react-markdown.min.js"></script>-->
     <script>
        var editor=new Editor('app',{
+           toolbars:[
+               {
+                   name: "image",
+                   title:"图片",
+                   toolbarIcon:"fa-picture-o"
+               },
+               {
+                   name: "insertorderedlist",
+                   title:"有序列表",
+                   toolbarIcon:"fa-list-ol"
+               },
+               {
+                   name: "insertunorderedlist",
+                   title:"无序列表",
+                   toolbarIcon:"fa-list-ul"
+               },
+               {
+                   name: "H1",
+                   title:"H1",
+                   toolbarText:"H1"
+               },
+               {
+                   name: "H2",
+                   title:"H2",
+                   toolbarText:"H2"
+               },
+               {
+                   name: "H3",
+                   title:"H3",
+                   toolbarText:"H3"
+               },
+               {
+                   name: "H4",
+                   title:"H4",
+                   toolbarText:"H4"
+               },
+               {
+                   name: "H5",
+                   title:"H5",
+                   toolbarText:"H5"
+               },
+               {
+                   name: "H6",
+                   title:"H6",
+                   toolbarText:"H6"
+               },
+               {
+                   name: "text",
+                   title:"text",
+                   toolbarIcon:"fa-user-circle-o",
+                   toolbarHandlers:function (_this) {
+                        return _this.shortCutText("## 标题", 3, 5)
+                   }
+               }
+           ]
         })
     </script>
 </body>
