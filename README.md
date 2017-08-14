@@ -1,17 +1,18 @@
 # react-for-md
 
 [![NPM version][npm-image]][npm-url]
+
 [npm-image]: https://img.shields.io/npm/v/conso.svg?style=flat-square
 [npm-url]: https://https://www.npmjs.com/package/react-for-md
 
-**react-for-md**:A configurable markdown editor (component), based on React & Marked(md-plus).
+**react-for-md** ：A configurable markdown editor (component), based on React & Marked(md-plus).
 
 ## Features
 
 - ✔︎ Based on React , A configurable markdown editor (component);
 - ✔︎ Support Standard Markdown / CommonMark and GFM (GitHub Flavored Markdown);
 - ✔︎ Real-time Preview;
-- ✔︎ Image (cross-domain) upload;
+- ✔︎ Image upload;
 - ✔︎ Preformatted text/Code blocks insert;
 - ✔︎ Read only, Dark-themes, Code syntax highlighting;
 - ✔︎ Markdown Extras(Base on md-plus module): Support TOC (Table of Contents);
@@ -26,68 +27,56 @@
 $ npm install react-for-md 
 ```
 
-## Example
+## Usages
 
-you can mapping `http://localhost:3000/home/user/:uid` via code below
+HTML：
 
-```javascript
-let {Annotation} = require('conso');
-let UserModel = require('../model/UserModel');
-
-let {route, get, model} = Annotation;
-
-@route('/home')
-class index {
-
-    @model(UserModel)
-    user;
-
-    @get('/user/:uid')
-    async homePage(ctx, next) {
-        let _user = await this.user.findOne({uid: ctx.params.id});
-        // await ctx.render('index', {user:_user});
-        ctx.json({user:_user});
-    }
-}
-
+```html
+ <link href="/dist/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+ <link href="/dist/css/react-markdown.min.css" rel="stylesheet">
+ <div id="app"></div>
 ```
+javascript:
 
-## Quick Start
-
-> conso has a built-in generator which you can use that to generate an application as shown below:
-
- - Install the executable.
-
-```bash
-$ npm install -g conso
+```html
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+<script src="react-markdown.min.js"></script>
+<script type="text/javascript">
+    var editor=new Editor('app',{
+        /*
+          // or you can custom image upload route and publish form route.
+           upload_route:"/upload",
+           publish_route:"/",
+         // or you can custom the editor container size.
+           width: "100%",
+           height: "100%",
+         // or you can custom toolbar.
+            toolbars:[
+               {
+                   name: "image",
+                   title:"图片",
+                   toolbarIcon:"fa-picture-o"
+               },
+               {
+                   name: "H1",
+                   title:"H1",
+                   toolbarText:"H1"
+               },
+               {
+                   name: "test",
+                   title:"test",
+                   toolbarIcon:"fa-user-circle-o",
+                   //custom eventHandlers:
+                   toolbarHandlers:function (_this) {
+                        return _this.shortCutText("**加粗文字**", 2, 6)
+                   }
+               }
+           ]
+        */
+    })
+</script>
 ```
-
- - Create the app:
- 
-```bash
-$ conso init showcase && cd showcase
-```
-
- - Install dependencies:
-  
-```bash
-$ npm install
-```
-  
- - Start the server:
-  
-```bash
-$ npm start
-```
-
- Then Open `http://localhost:3000`
-
-## Docs & Community
-
->This project uses JSDoc. For the full public API documentation, clone the repository and run npm run doc. This will run JSDoc with the proper options and output the documentation to out/.
-
-Coming soon! Please expecting!
-
 
 ## License
 
