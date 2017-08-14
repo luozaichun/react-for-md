@@ -46,12 +46,17 @@ javascript:
     var editor=new Editor('app',{
         /*
           // or you can custom image upload route and publish form route.
+ 
            upload_route:"/upload",
            publish_route:"/",
+ 
          // or you can custom the editor container size.
+ 
            width: "100%",
            height: "100%",
+ 
          // or you can custom toolbar.
+ 
             toolbars:[
                {
                    name: "image",
