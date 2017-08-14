@@ -1,13 +1,23 @@
 {
   "name": "react-for-md",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A configurable markdown editor (component), based on React & Marked(md-plus).",
   "author": "luozaichun",
   "repository": "https://github.com/luozaichun/react_markdown.git",
   "homepage": "https://github.com/luozaichun/react_markdown",
   "license": "MIT",
-  "keywords": ["markdown", "markup", "react","configurable"],
-  "tags": ["markdown", "markup", "react","configurable"],
+  "keywords": [
+    "markdown",
+    "markup",
+    "react",
+    "configurable"
+  ],
+  "tags": [
+    "markdown",
+    "markup",
+    "react",
+    "configurable"
+  ],
   "main": "./dist/js/react-markdown.min.js",
   "bin": "./bin/www",
   "scripts": {
@@ -16,7 +26,7 @@
     "test": "node bin/www"
   },
   "style": "dist/css/react-markdown.min.css",
-  "font-awesome":"dist/font-awesome-4.7.0/css/font-awesome.min.css",
+  "font-awesome": "dist/font-awesome-4.7.0/css/font-awesome.min.css",
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",
     "babel-core": "^6.17.0",
@@ -29,7 +39,7 @@
     "extract-text-webpack-plugin": "^0.8.2",
     "formidable": "^1.1.1",
     "fs": "^0.0.1-security",
-    "md-plus": "^0.4.2",
+    "md-plus": "^0.4.3",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "style-loader": "^0.13.1",
