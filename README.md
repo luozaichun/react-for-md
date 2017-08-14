@@ -18,6 +18,9 @@
 - ✔︎ Read only, Dark-themes, Code syntax highlighting;
 - ✔︎ Markdown Extras(Base on md-plus module): Support TOC (Table of Contents);
 - ✔︎ Support CMD Module Loader, and Custom/define editor plugins;
+- ✔︎ Support coaxial scrolling
+  
+![alt](https://raw.githubusercontent.com/wiki/luozaichun/react-for-md/screenshoot.png)
 
 ## Download & install
 
