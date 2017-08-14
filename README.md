@@ -3,7 +3,7 @@
 [![NPM version][npm-image]][npm-url]
 
 [npm-image]: https://img.shields.io/npm/v/conso.svg?style=flat-square
-[npm-url]: https://https://www.npmjs.com/package/react-for-md
+[npm-url]: https://www.npmjs.com/package/react-for-md
 
 **react-for-md** ：A configurable markdown editor (component), based on React & Marked(md-plus).
 
