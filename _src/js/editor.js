@@ -2,9 +2,6 @@ import React from 'react';
 import marked from 'md-plus';
 import classNames from 'classnames';
 let renderer = new marked.Renderer();
-renderer.code = (code)=>{
-    return '<pre class="prettyprint linenums">' + code + '</pre>';
-};
 let defaultOption={
     upload_route:"/upload",
     publish_route:"/",
