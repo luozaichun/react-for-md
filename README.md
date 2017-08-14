@@ -43,7 +43,7 @@ javascript:
 <script src="react-dom.js"></script>
 <script src="react-markdown.min.js"></script>
 <script type="text/javascript">
-    var editor=new Editor('app',{
+    var editor = new Editor('app',{
         /*
           // or you can custom image upload route and publish form route.
  
