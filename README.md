@@ -24,7 +24,7 @@
 
 ## Download & install
 
-[Github download](https://github.com/luozaichun/react-for-md.git)
+[Github download](https://github.com/luozaichun/react-for-md/archive/master.zip)
 
 ### install
 ```bash
