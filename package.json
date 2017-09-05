@@ -1,10 +1,10 @@
 {
   "name": "react-for-md",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A configurable markdown editor (component), based on React & Marked(md-plus).",
   "author": "luozaichun",
-  "repository": "https://github.com/luozaichun/react_markdown.git",
-  "homepage": "https://github.com/luozaichun/react_markdown",
+  "repository": "https://github.com/luozaichun/react-for-md.git",
+  "homepage": "https://github.com/luozaichun/react-for-md",
   "license": "MIT",
   "keywords": [
     "markdown",
