@@ -6,7 +6,7 @@
 [npm-image]: https://img.shields.io/npm/v/react-for-md.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/react-for-md
 
-**react-for-md** ：A configurable markdown editor (component), based on React & Marked([md-plus](https://github.com/luozaichun/md-plus)).
+**react-for-md** ：A configurable markdown editor (component), based on React & [md-plus](https://github.com/luozaichun/md-plus).
 
 ## Features
 
